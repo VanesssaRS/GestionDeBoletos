@@ -80,15 +80,20 @@ public class FrmViajes extends javax.swing.JFrame {
         tblViajes.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         tblViajes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+                "Codigo", "Cooperativa", "Destino", "Fecha", "Horario"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tblViajes);
 
         btnAñadir.setBackground(java.awt.SystemColor.activeCaption);

@@ -5,6 +5,14 @@
  */
 package Visual.Administrador;
 
+import Control.Administrador.CooperativasManager;
+import Control.Administrador.UsuariosManager;
+import Control.SingleCallBack;
+import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
+import Model.Usuarios.Administrador.Modulos.AdminUsuarios;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -25,6 +33,7 @@ public class FrmUsuarios extends javax.swing.JFrame {
         lblFechaSistema.setText(fechasistema.format(fecha));
         SimpleDateFormat horasistema = new SimpleDateFormat("HH:mm");
         lblHora.setText(horasistema.format(fecha));
+        insertDataInTable();
     }
 
     /**
@@ -80,15 +89,20 @@ public class FrmUsuarios extends javax.swing.JFrame {
         tblUsuarios.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
+                "Codigo", "Nombre", "Apellido", "Cedula", "Email", "Telefono", "Fecha Nacimiento", "Direccion", "TipoUser"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tblUsuarios);
 
         btnAñadir.setBackground(java.awt.SystemColor.activeCaption);
@@ -110,6 +124,11 @@ public class FrmUsuarios extends javax.swing.JFrame {
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Visual/img/eliminaricon.png"))); // NOI18N
         btnEliminar.setText("    Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -305,10 +324,54 @@ public class FrmUsuarios extends javax.swing.JFrame {
         frmAñadirUsuario.setVisible(true);
     }//GEN-LAST:event_btnAñadirMouseClicked
 
+    public void insertDataInTable() {
+        DefaultTableModel modelo = (DefaultTableModel) tblUsuarios.getModel();
+        if (modelo != null) {
+            for (AdminUsuarios item : UsuariosManager.getInstance().getListUsuarios()) {
+                Object[] fila = new Object[10];
+                fila[0] = item.getCode();
+                fila[1] = item.getNombre();
+                fila[2] = item.getApellido();
+                fila[3] = item.getCedula();
+                fila[4] = item.getEmail();
+                fila[5] = item.getTelefono();
+                fila[6] = item.getFechanac();
+                fila[7] = item.getDirecc();
+                fila[8] = item.getTipoUser();
+                fila[9] = item.getApellido();
+
+                modelo.addRow(fila);
+                tblUsuarios.setModel(modelo);
+            }
+        }
+    }
+
     private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
         FrmActualizarUsuario frmActualizarUsuario = new FrmActualizarUsuario();
         frmActualizarUsuario.setVisible(true);
     }//GEN-LAST:event_btnActualizarMouseClicked
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        int rowSelectect = tblUsuarios.getSelectedRow();
+        if(rowSelectect >= 0){
+            int codigo = (int) tblUsuarios.getModel().getValueAt(rowSelectect,0);
+            UsuariosManager.getInstance().deleteUsuarios(codigo, new SingleCallBack() {
+                @Override
+                public void onSucces() {
+                    ((DefaultTableModel)tblUsuarios.getModel()).removeRow(rowSelectect);
+                    JOptionPane.showMessageDialog(null, "¡Se eliminó correctamente!");
+                }
+
+                @Override
+                public void onFailed() {
+                    JOptionPane.showMessageDialog(null, "¡Ha ocurrido un error al eliminar los datos!");
+                }
+            });
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "Selecciona un Usuario!");
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -1,14 +1,11 @@
 package Model.Storage;
 
-import Model.Usuarios.Administrador.Modulos.AdminBuses;
-import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
-import Model.Usuarios.Administrador.Modulos.AdminViajes;
+import Model.Usuarios.Administrador.Modulos.*;
 
 import javax.xml.crypto.Data;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class DataBaseManager {
@@ -122,7 +119,19 @@ public class DataBaseManager {
         return false;
     }
 
-    public ArrayList<AdminBuses> getListBusesDb(){
+    public boolean deleteUsuario(int id) {
+        try {
+            PreparedStatement statement = database.open().prepareStatement( "DELETE FROM Persona WHERE id=" + id );
+            statement.executeUpdate();
+            database.close();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public ArrayList<AdminBuses> getListBusesDb() {
         ArrayList<AdminBuses> list = new ArrayList<>();
         try {
             Statement statement = database.open().createStatement();
@@ -138,7 +147,7 @@ public class DataBaseManager {
         return list;
     }
 
-    public boolean insertBusesAfiliados(String placa,int asientos, int cooperativa) {
+    public boolean insertBusesAfiliados(String placa, int asientos, int cooperativa) {
         String sql = "INSERT INTO buses(Placa_Bus,numAsientos,id_cooperativa) VALUES(?,?,?)";
         try {
             PreparedStatement pp = database.open().prepareStatement(sql);
@@ -154,7 +163,7 @@ public class DataBaseManager {
         }
     }
 
-    public boolean upadateBuses(int codigo,int asientos,String placa, int cooperativa ) {
+    public boolean upadateBuses(int codigo, int asientos, String placa, int cooperativa) {
         String sql = "UPDATE buses SET Placa_Bus=?, numAsientos=?, id_cooperativa=?  WHERE id=?";
         try {
             PreparedStatement pp = database.open().prepareStatement(sql);
@@ -184,5 +193,100 @@ public class DataBaseManager {
         return false;
     }
 
+    public boolean insertarUsuario(String nombre, String apellido, String cedula, String email, String telefono, Date date, String direccion, String usuario, String contrasena, int tipoUser) {
+        String sql = "INSERT INTO Persona(Nombre,Cedula,Email,Telefono,FechaNac,Direccion,TipoUser,Apellido) VALUES(?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement pp = database.open().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pp.setString(1, nombre);
+            pp.setString(2, cedula);
+            pp.setString(3, email);
+            pp.setInt(4, Integer.parseInt(telefono));
+            pp.setDate(5, date);
+            pp.setString(6, direccion);
+            pp.setInt(7, 1);
+            pp.setString(8, apellido);
+            pp.executeUpdate();
+            ResultSet rs = pp.getGeneratedKeys();
+            int id = rs.getInt(1);
+            pp.close();
+            PreparedStatement pp2 = database.open().prepareStatement("INSERT INTO Usuario(usuario,clave,id_persona) values(?,?,?)");
+            pp2.setString(1, usuario);
+            pp2.setString(2, contrasena);
+            pp2.setInt(3, id);
+            pp2.executeUpdate();
+            pp2.close();
 
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateUsuario(int codigo, String cedula, String nombre, String apellido, String email, int telefono, Date date, String direccion, String tipoUser) {
+        String sql = "UPDATE Persona SET Nombre=? ,Cedula=? ,Email=? ,Telefono=? ,FechaNac=? ,Direccion=? ,TipoUser=? ,Apellido=?  WHERE id=?";
+        try {
+            PreparedStatement pp = database.open().prepareStatement(sql);
+            pp.setString(1, nombre);
+            pp.setString(2, cedula);
+            pp.setString(3, email);
+            pp.setInt(4, telefono);
+            pp.setDate(5, date);
+            pp.setString(6, direccion);
+            pp.setInt(7, 1);
+            pp.setString(8, apellido);
+            pp.setInt(9, codigo);
+            pp.executeUpdate();
+            database.close();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            database.close();
+            return false;
+        }
+    }
+
+    public ArrayList<AdminUsuarios> getListUsuarios() {
+        ArrayList<AdminUsuarios> list = new ArrayList<>();
+        try {
+            Statement statement = database.open().createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Persona");
+            while (resultSet.next()) {
+                list.add(new AdminUsuarios(
+                        resultSet.getInt("id"),
+                        resultSet.getString("Nombre"),
+                        resultSet.getString("Cedula"),
+                        resultSet.getString("Email"),
+                        resultSet.getInt("Telefono"),
+                        new java.util.Date(Long.parseLong(resultSet.getString("FechaNac"))),
+                        resultSet.getString("Direccion"),
+                        TipoUsuario.getOrdinal(resultSet.getInt("TipoUser")),
+                        resultSet.getString("Apellido")));
+            }
+            return list;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        database.close();
+        return list;
+    }
+
+    public boolean insertViajes(String cooperativa, String lugarpartida, String destino,long date ,String hora) {
+        String sql = "INSERT INTO insert(Cooperativa,LugarPartida,Destino,Fecha,Hora) VALUES(?,?,?,?,?)";
+        try {
+            PreparedStatement pp = database.open().prepareStatement(sql);
+            pp.setString(1, cooperativa);
+            pp.setString(2, lugarpartida);
+            pp.setString(3, destino);
+            pp.setDate(4, new Date(date));
+            pp.setString(5, hora);
+
+            pp.executeUpdate();
+            pp.close();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }
