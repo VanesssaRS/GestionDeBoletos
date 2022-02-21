@@ -186,7 +186,7 @@ public class DataBaseManager {
     }
 
 
-    //-----------------------------------USUARIOS--------------------------------------
+    //-----------------------------------USUARIOS---------------------------------------------
     
     //INSERTAR USUARIO
     public boolean insertUsuario(String nombre, String apellido, String cedula, String email, 
