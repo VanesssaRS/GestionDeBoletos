@@ -2,6 +2,7 @@ package Model.Storage;
 
 import Model.Usuarios.Administrador.Modulos.AdminBuses;
 import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
+import Model.Usuarios.Administrador.Modulos.AdminUsuarios;
 import Model.Usuarios.Administrador.Modulos.AdminViajes;
 
 import javax.xml.crypto.Data;
@@ -185,4 +186,98 @@ public class DataBaseManager {
     }
 
 
+    //-----------------------------------USUARIOS--------------------------------------
+    
+    //INSERTAR USUARIO
+    public boolean insertUsuario(String nombre, String apellido, String cedula, String email, 
+            String telefono, String fechaNacimiento, String direccion, String usuario ,String contraseña , int idUsuario) {
+        String sql = "INSERT INTO usuario(Cedula, Apellido, Nombre, Correo, Telefono, Direccion, "
+                + "Fecha_Nacimiento, Persona_Id_Persona) VALUES(?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement pp = database.open().prepareStatement(sql);
+            pp.setString(1, nombre);
+            pp.setString(2, apellido);
+            pp.setString(3, cedula);
+            pp.setString(4, email);
+            pp.setString(5, telefono);
+            pp.setString(6, fechaNacimiento);
+            pp.setString(7, direccion);
+            pp.setString(8, usuario);
+            pp.setString(9, contraseña);
+            pp.setInt(10, idUsuario);
+            pp.executeUpdate();
+            pp.close();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+//LISTA DE USUARIOS
+    public ArrayList<AdminUsuarios> getListUsuariosDb(){
+        ArrayList<AdminUsuarios> list = new ArrayList<>();
+        try {
+            Statement statement = database.open().createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM PERSONA");
+            while (resultSet.next()) {
+                list.add(new AdminUsuarios(resultSet.getInt("id"), resultSet.getString("Cedula"), 
+                        resultSet.getString("Apellido"), resultSet.getString("Nombre"), 
+                        resultSet.getString("Correo"), resultSet.getString("Telefono"), 
+                        resultSet.getString("Direccion"), resultSet.getString("Fecha_Nacimiento"), 
+                        resultSet.getString("Usuario"), resultSet.getString("Contraseña"),  
+                        resultSet.getInt("Persona_Id_Persona")));
+            }
+            return list;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        database.close();
+        return list;
+    }
+
+//UPDATE USUARIOS (ACTUALIZAR)    
+    public boolean upadateUsuarioString(String nombre, String apellido, String cedula, String email, 
+            String telefono, String fechaNacimiento, String direccion, String usuario ,String contraseña , int idUsuario){
+        String sql = "UPDATE PERSONA SET Cedula=?, Apellido=?, Nombre=?, Correo=?, Telefono=?, "
+                + "Direccion=?, Fecha_Nacimiento=?, Persona_Id_Persona=? WHERE id=?";
+        
+        try {
+            PreparedStatement pp = database.open().prepareStatement(sql);
+            pp.setString(1, nombre);
+            pp.setString(2, apellido);
+            pp.setString(3, cedula);
+            pp.setString(4, email);
+            pp.setString(5, telefono);
+            pp.setString(6, fechaNacimiento);
+            pp.setString(7, direccion);
+            pp.setString(8, usuario);
+            pp.setString(9, contraseña);
+            pp.setInt(10, idUsuario);
+            pp.executeUpdate();
+            database.close();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            database.close();
+            return false;
+        }
+    }
+    
+//ELIMINAR USUARIO
+    
+        public boolean deleteUsuario(int id) {
+        try {
+            PreparedStatement statement = database.open().prepareStatement("DELETE FROM PERSONA WHERE id=" + id);
+            statement.executeUpdate();
+            database.close();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+        
+}
+    
 }
