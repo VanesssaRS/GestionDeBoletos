@@ -386,4 +386,50 @@ public class DataBaseManager {
         return false;
     }
 
+    //-----------------------------------CHOFER---------------------------------------------
+        //LISTA DE CHOFER
+    public ArrayList<AdminChofer> getListChoferDb(){
+        ArrayList<AdminChofer> list = new ArrayList<>();
+        try {
+            Statement statement = database.open().createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM PERSONA");
+            while (resultSet.next()) {
+                list.add(new AdminChofer(resultSet.getInt("id"), resultSet.getString("Cedula"), 
+                        resultSet.getString("Apellido"), resultSet.getString("Nombre"), 
+                        resultSet.getString("Correo"), resultSet.getString("Telefono"), 
+                        resultSet.getString("Direccion"), resultSet.getString("Fecha_Nacimiento"), 
+                        resultSet.getInt("Persona_Id_Persona")));
+            }
+            return list;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        database.close();
+        return list;
+    }
+    
+        //INSERTAR PASAJERO
+    public boolean insertChofer(String nombre, String apellido, String cedula, String email, 
+            String telefono, String fechaNacimiento, String direccion, int idPersona) {
+        String sql = "INSERT INTO PERSONA(Cedula, Apellido, Nombre, Correo, Telefono, Direccion, "
+                + "Fecha_Nacimiento, Persona_Id_Persona) VALUES(?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement pp = database.open().prepareStatement(sql);
+            pp.setString(1, nombre);
+            pp.setString(2, apellido);
+            pp.setString(3, cedula);
+            pp.setString(4, email);
+            pp.setString(5, telefono);
+            pp.setString(6, fechaNacimiento);
+            pp.setString(7, direccion);
+            pp.setInt(8, idPersona);
+            pp.executeUpdate();
+            pp.close();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
 }
