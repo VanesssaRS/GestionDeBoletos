@@ -17,8 +17,8 @@ este no debería presentar fallas al momento de ejecutar de los diversos servici
 
 Video Flash de como clonar un repositorio usando el entorno IntelliJ IDEA. https://youtu.be/uohqbTCoLIk
 
-1.- Copiamos el link HTTP del repositorio.
-2.- Click en Get Proyect From Git.
-3.- Pegamos el link del repositorio
-4.- Esperemos a que se complete la clonación.
-5.- Listo!
+- 1.- Copiamos el link HTTP del repositorio.
+- 2.- Click en Get Proyect From Git.
+- 3.- Pegamos el link del repositorio
+- 4.- Esperemos a que se complete la clonación.
+- 5.- Listo!
