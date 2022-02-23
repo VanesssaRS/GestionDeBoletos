@@ -294,6 +294,7 @@ public class DataBaseManager {
     }
 
 
+/*
     //-----------------------------------USUARIOS---------------------------------------------
 
     //INSERTAR USUARIO
@@ -431,5 +432,29 @@ public class DataBaseManager {
             return false;
         }
     }
-
+*/
+    
+//-----------------------------------INICIAR SESION---------------------------------------------
+    
+    public boolean Login(String nombre, String contraseña){
+        
+        boolean respuesta = false;
+        
+        try {
+            Statement statement = database.open().createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM USUARIO WHERE usuario='" + nombre + "' AND clave='" + contraseña + "'" );
+            while (resultSet.next()) {
+                respuesta = true;
+            }
+        } catch (org.sqlite.SQLiteException ex) {
+            ex.printStackTrace();
+            respuesta = false;
+        } catch (SQLException ex) {
+            Logger.getLogger(DataBaseManager.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            database.close();
+        }
+        database.close();
+        return respuesta;
+    }
 }
