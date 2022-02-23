@@ -32,9 +32,9 @@
                           <Component id="jLabel1" alignment="0" min="-2" pref="64" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txt_usuario" min="-2" pref="184" max="-2" attributes="0"/>
-                          <Component id="txt_contraseña" min="-2" pref="184" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="txt_usuario" pref="184" max="32767" attributes="0"/>
+                          <Component id="psf_contraseña" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -55,9 +55,9 @@
                   <Component id="txt_usuario" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                  <Component id="txt_contraseña" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="psf_contraseña" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="btn_Iniciar_sesion" min="-2" max="-2" attributes="0"/>
@@ -83,13 +83,19 @@
         <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
       </Properties>
     </Component>
-    <Component class="java.awt.TextField" name="txt_contrase&#xf1;a">
-    </Component>
     <Component class="java.awt.TextField" name="txt_usuario">
     </Component>
     <Component class="javax.swing.JButton" name="btn_Iniciar_sesion">
       <Properties>
         <Property name="text" type="java.lang.String" value="Iniciar sesion"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_Iniciar_sesionActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="psf_contrase&#xf1;a">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jPasswordField"/>
       </Properties>
     </Component>
   </SubComponents>

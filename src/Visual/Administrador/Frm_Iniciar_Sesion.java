@@ -5,6 +5,9 @@
  */
 package Visual.Administrador;
 
+import Control.loginManager;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author FERNANDO
@@ -29,9 +32,9 @@ public class Frm_Iniciar_Sesion extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txt_contraseña = new java.awt.TextField();
         txt_usuario = new java.awt.TextField();
         btn_Iniciar_sesion = new javax.swing.JButton();
+        psf_contraseña = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,6 +45,13 @@ public class Frm_Iniciar_Sesion extends javax.swing.JFrame {
         jLabel2.setText("Contraseña:");
 
         btn_Iniciar_sesion.setText("Iniciar sesion");
+        btn_Iniciar_sesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Iniciar_sesionActionPerformed(evt);
+            }
+        });
+
+        psf_contraseña.setText("jPasswordField");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -55,9 +65,9 @@ public class Frm_Iniciar_Sesion extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                            .addComponent(psf_contraseña)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(132, 132, 132)
                         .addComponent(btn_Iniciar_sesion)))
@@ -71,9 +81,9 @@ public class Frm_Iniciar_Sesion extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txt_contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(psf_contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addComponent(btn_Iniciar_sesion)
                 .addContainerGap(47, Short.MAX_VALUE))
@@ -81,6 +91,36 @@ public class Frm_Iniciar_Sesion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public void Iniciar_Sesion(){
+        String usuario;
+        String contraseña;
+    }
+    
+    public String contraseña(){
+       String contra="";
+       char[] contraseña= psf_contraseña.getPassword();
+       for(int i=0; i<contraseña.length; i++){
+           contra+=contraseña[i];
+       }
+       return contra;
+    }
+    
+    private void btn_Iniciar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Iniciar_sesionActionPerformed
+        String usuario=""; 
+        String contraseña="";
+        
+        usuario= this.txt_usuario.getText();
+        contraseña= this.contraseña();
+        if(loginManager.getinstance().login(usuario, contraseña)){
+            JOptionPane.showMessageDialog(null, "INICIO CON EXITO","QUE PRO",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null, "Usuario y contraseña incorrectas","Error de Conexion",JOptionPane.ERROR_MESSAGE);
+            txt_usuario.setText("");
+            psf_contraseña.setText("");
+        }
+        
+    }//GEN-LAST:event_btn_Iniciar_sesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -121,7 +161,7 @@ public class Frm_Iniciar_Sesion extends javax.swing.JFrame {
     private javax.swing.JButton btn_Iniciar_sesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private java.awt.TextField txt_contraseña;
+    private javax.swing.JPasswordField psf_contraseña;
     private java.awt.TextField txt_usuario;
     // End of variables declaration//GEN-END:variables
 }
