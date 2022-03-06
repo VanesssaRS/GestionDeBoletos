@@ -1,15 +1,14 @@
 package Model.Storage;
 
-import Model.Usuarios.Administrador.Modulos.AdminBuses;
-import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
-import Model.Usuarios.Administrador.Modulos.AdminUsuarios;
-import Model.Usuarios.Administrador.Modulos.AdminViajes;
+import Model.Usuarios.Administrador.Modulos.*;
 
 import javax.xml.crypto.Data;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DataBaseManager {
     private static DataBaseManager dataBaseManager;
@@ -59,19 +58,23 @@ public class DataBaseManager {
      * @param numBuses
      * @return
      */
-    public boolean insertCooperativa(String nombre, String codProvincia, int numBuses) {
-        String sql = "INSERT INTO cooperativa(Nombre_Cooperativa,Cod_Provincia,Num_Bus) VALUES(?,?,?)";
+    public String insertCooperativa(String nombre, String codProvincia, int numBuses) {
+        String sql = "{CALL crearCooperativa(?,?,?)}";
+        String msg = "";
         try {
-            PreparedStatement pp = database.open().prepareStatement(sql);
+            CallableStatement pp = database.open().prepareCall(sql);
             pp.setString(1, nombre);
             pp.setString(2, codProvincia);
             pp.setDouble(3, numBuses);
-            pp.executeUpdate();
+            ResultSet rs = pp.executeQuery();
+            while (rs.next()) {
+                msg = rs.getString("Mensaje");
+            }
             pp.close();
-            return true;
+            return msg;
         } catch (SQLException ex) {
             ex.printStackTrace();
-            return false;
+            return null;
         }
     }
 
@@ -81,7 +84,7 @@ public class DataBaseManager {
             Statement statement = database.open().createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM cooperativa");
             while (resultSet.next()) {
-                list.add(new AdminCooperativas(resultSet.getInt("id"), resultSet.getString("Nombre_Cooperativa"), resultSet.getString("Cod_Provincia"), resultSet.getInt("Num_Bus")));
+                list.add(new AdminCooperativas(resultSet.getInt("id"), resultSet.getString("Nombre_Cooperativa"), resultSet.getString("Codigo_Provincia"), resultSet.getInt("Buses_Disponibles")));
             }
             return list;
 
@@ -93,7 +96,7 @@ public class DataBaseManager {
     }
 
     public boolean updateCooperativa(String nombre, int codigo, int numBus, String codPovi) {
-        String sql = "UPDATE cooperativa SET Nombre_Cooperativa=?, Cod_Provincia=?, Num_Bus=?  WHERE id=?";
+        String sql = "UPDATE cooperativa SET Nombre_Cooperativa=?, Codigo_Provincia=?, Buses_Disponibles=?  WHERE id=?";
         try {
             PreparedStatement pp = database.open().prepareStatement(sql);
             pp.setString(1, nombre);
@@ -124,7 +127,7 @@ public class DataBaseManager {
 
     public boolean deleteUsuario(int id) {
         try {
-            PreparedStatement statement = database.open().prepareStatement( "DELETE FROM Persona WHERE id=" + id );
+            PreparedStatement statement = database.open().prepareStatement("DELETE FROM usuario WHERE id=" + id);
             statement.executeUpdate();
             database.close();
             return true;
@@ -140,7 +143,7 @@ public class DataBaseManager {
             Statement statement = database.open().createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM buses");
             while (resultSet.next()) {
-                list.add(new AdminBuses(resultSet.getInt("id"), resultSet.getString("Placa_Bus"), resultSet.getInt("numAsientos"), resultSet.getInt("id_cooperativa")));
+                list.add(new AdminBuses(resultSet.getInt("id"), resultSet.getString("Placa"), resultSet.getInt("Num_Asientos"), resultSet.getInt("id_cooperativa")));
             }
             return list;
         } catch (SQLException ex) {
@@ -150,24 +153,28 @@ public class DataBaseManager {
         return list;
     }
 
-    public boolean insertBusesAfiliados(String placa,int asientos, int cooperativa) {
-        String sql = "INSERT INTO buses(Placa_Bus,numAsientos,id_cooperativa) VALUES(?,?,?)";
+    public String insertBusesAfiliados(String placa, int asientos, int cooperativa) {
+        String sql = "{CALL crearBuses(?,?,?)}";
+        String msg = "";
         try {
-            PreparedStatement pp = database.open().prepareStatement(sql);
+            CallableStatement pp = database.open().prepareCall(sql);
             pp.setString(1, placa);
             pp.setInt(2, asientos);
             pp.setInt(3, cooperativa);
-            pp.executeUpdate();
+            ResultSet rs = pp.executeQuery();
+            while (rs.next()) {
+                msg = rs.getString("Mensaje");
+            }
             pp.close();
-            return true;
+            return msg;
         } catch (SQLException ex) {
             ex.printStackTrace();
-            return false;
+            return null;
         }
     }
 
-    public boolean upadateBuses(int codigo,int asientos,String placa, int cooperativa ) {
-        String sql = "UPDATE buses SET Placa_Bus=?, numAsientos=?, id_cooperativa=?  WHERE id=?";
+    public boolean upadateBuses(int codigo, int asientos, String placa, int cooperativa) {
+        String sql = "UPDATE buses SET Placa=?, Num_Asientos=?, id_cooperativa=?  WHERE id=?";
         try {
             PreparedStatement pp = database.open().prepareStatement(sql);
             pp.setString(1, placa);
@@ -196,33 +203,30 @@ public class DataBaseManager {
         return false;
     }
 
-    public boolean insertarUsuario(String nombre, String apellido, String cedula, String email, String telefono, Date date, String direccion, String usuario, String contrasena, int tipoUser) {
-        String sql = "INSERT INTO Persona(Nombre,Cedula,Email,Telefono,FechaNac,Direccion,TipoUser,Apellido) VALUES(?,?,?,?,?,?,?,?)";
+    public String insertarUsuario(String nombre, String apellido, String cedula, String email, String telefono, Date date, String direccion, String usuario, String contrasena, int tipoUser) {
+        String sql = "CALL crearUsuario(?,?,?,?,?,?,?,?,?,?)";
+        String msg = "";
         try {
-            PreparedStatement pp = database.open().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pp.setString(1, nombre);
-            pp.setString(2, cedula);
-            pp.setString(3, email);
-            pp.setInt(4, Integer.parseInt(telefono));
-            pp.setDate(5, date);
-            pp.setString(6, direccion);
-            pp.setInt(7, 1);
-            pp.setString(8, apellido);
-            pp.executeUpdate();
-            ResultSet rs = pp.getGeneratedKeys();
-            int id = rs.getInt(1);
+            CallableStatement pp = database.open().prepareCall(sql);
+            pp.setString(1, usuario);
+            pp.setString(2, contrasena);
+            pp.setString(3, nombre);
+            pp.setString(4, apellido);
+            pp.setString(5, cedula);
+            pp.setString(6, email);
+            pp.setString(7, telefono);
+            pp.setDate(8, date);
+            pp.setString(9, direccion);
+            pp.setInt(10, tipoUser);
+            ResultSet rs = pp.executeQuery();
+            while (rs.next()) {
+                msg = rs.getString("Mensaje");
+            }
             pp.close();
-            PreparedStatement pp2 = database.open().prepareStatement("INSERT INTO Usuario(usuario,clave,id_persona) values(?,?,?)");
-            pp2.setString(1, usuario);
-            pp2.setString(2, contrasena);
-            pp2.setInt(3, id);
-            pp2.executeUpdate();
-            pp2.close();
-
-            return true;
+            return msg;
         } catch (SQLException ex) {
             ex.printStackTrace();
-            return false;
+            return null;
         }
     }
 
@@ -253,17 +257,17 @@ public class DataBaseManager {
         ArrayList<AdminUsuarios> list = new ArrayList<>();
         try {
             Statement statement = database.open().createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Persona");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM persona");
             while (resultSet.next()) {
                 list.add(new AdminUsuarios(
-                        resultSet.getInt("id"),
+                        resultSet.getInt("id_persona"),
                         resultSet.getString("Nombre"),
                         resultSet.getString("Cedula"),
                         resultSet.getString("Email"),
                         resultSet.getInt("Telefono"),
-                        new java.util.Date(Long.parseLong(resultSet.getString("FechaNac"))),
+                        new java.util.Date(Long.parseLong(resultSet.getString("FechaNacimiento"))),
                         resultSet.getString("Direccion"),
-                        TipoUsuario.getOrdinal(resultSet.getInt("TipoUser")),
+                        TipoUsuario.getOrdinal(resultSet.getInt("id_tipoUser")),
                         resultSet.getString("Apellido")));
             }
             return list;
@@ -274,22 +278,25 @@ public class DataBaseManager {
         return list;
     }
 
-    public boolean insertViajes(String cooperativa, String lugarpartida, String destino,long date ,String hora) {
-        String sql = "INSERT INTO insert(Cooperativa,LugarPartida,Destino,Fecha,Hora) VALUES(?,?,?,?,?)";
+    public String insertViajes(int cooperativa, String lugarpartida, String destino, long date, String hora) {
+        String sql = "{CALL crearViaje(?,?,?,?,?)}";
+        String msg = "";
         try {
-            PreparedStatement pp = database.open().prepareStatement(sql);
-            pp.setString(1, cooperativa);
-            pp.setString(2, lugarpartida);
-            pp.setString(3, destino);
-            pp.setDate(4, new Date(date));
-            pp.setString(5, hora);
-
-            pp.executeUpdate();
+            CallableStatement pp = database.open().prepareCall(sql);
+            pp.setString(1, lugarpartida);
+            pp.setString(2, destino);
+            pp.setDate(3, new Date(date));
+            pp.setString(4, hora);
+            pp.setInt(5, cooperativa);
+            ResultSet rs = pp.executeQuery();
+            while (rs.next()) {
+                msg = rs.getString("Mensaje");
+            }
             pp.close();
-            return true;
+            return msg;
         } catch (SQLException ex) {
             ex.printStackTrace();
-            return false;
+            return null;
         }
     }
 
@@ -299,7 +306,7 @@ public class DataBaseManager {
 
     //INSERTAR USUARIO
     public boolean insertUsuario(String nombre, String apellido, String cedula, String email,
-            String telefono, String fechaNacimiento, String direccion, String usuario ,String contraseña , int idUsuario) {
+                                 String telefono, String fechaNacimiento, String direccion, String usuario, String contraseña, int idUsuario) {
         String sql = "INSERT INTO usuario(Cedula, Apellido, Nombre, Correo, Telefono, Direccion, "
                 + "Fecha_Nacimiento, Persona_Id_Persona) VALUES(?,?,?,?,?,?,?,?)";
         try {
@@ -323,8 +330,8 @@ public class DataBaseManager {
         }
     }
 
-//LISTA DE USUARIOS
-    public ArrayList<AdminUsuarios> getListUsuariosDb(){
+    //LISTA DE USUARIOS
+    public ArrayList<AdminUsuarios> getListUsuariosDb() {
         ArrayList<AdminUsuarios> list = new ArrayList<>();
         try {
             Statement statement = database.open().createStatement();
@@ -345,9 +352,9 @@ public class DataBaseManager {
         return list;
     }
 
-//UPDATE USUARIOS (ACTUALIZAR)
+    //UPDATE USUARIOS (ACTUALIZAR)
     public boolean upadateUsuarioString(String nombre, String apellido, String cedula, String email,
-            String telefono, String fechaNacimiento, String direccion, String usuario ,String contraseña , int idUsuario){
+                                        String telefono, String fechaNacimiento, String direccion, String usuario, String contraseña, int idUsuario) {
         String sql = "UPDATE PERSONA SET Cedula=?, Apellido=?, Nombre=?, Correo=?, Telefono=?, "
                 + "Direccion=?, Fecha_Nacimiento=?, Persona_Id_Persona=? WHERE id=?";
 
@@ -375,17 +382,6 @@ public class DataBaseManager {
 
 //ELIMINAR USUARIO
 
-        public boolean deleteUsuario(int id) {
-        try {
-            PreparedStatement statement = database.open().prepareStatement("DELETE FROM PERSONA WHERE id=" + id);
-            statement.executeUpdate();
-            database.close();
-            return true;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return false;
-    }
 
     //-----------------------------------CHOFER---------------------------------------------
         //LISTA DE CHOFER
@@ -433,25 +429,23 @@ public class DataBaseManager {
         }
     }
 */
-    
+
 //-----------------------------------INICIAR SESION---------------------------------------------
-    
-    public boolean Login(String nombre, String contraseña){
-        
+
+    public boolean Login(String nombre, String contraseña) {
+
         boolean respuesta = false;
-        
+
         try {
             Statement statement = database.open().createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM USUARIO WHERE usuario='" + nombre + "' AND clave='" + contraseña + "'" );
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM USUARIO WHERE usuario='" + nombre + "' AND clave='" + contraseña + "'");
             while (resultSet.next()) {
                 respuesta = true;
             }
-        } catch (org.sqlite.SQLiteException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
             respuesta = false;
-        } catch (SQLException ex) {
-            Logger.getLogger(DataBaseManager.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
+        } finally {
             database.close();
         }
         database.close();

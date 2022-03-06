@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AdminManager {
+
     private static UsuariosManager instamce;
     public static HashMap<Integer, AdminUsuarios> usuariosHashMap = new HashMap<>();
 
@@ -20,7 +21,7 @@ public class AdminManager {
         return instamce;
     }
     //LISTA DE USUARIOS
-    public ArrayList<AdminUsuarios> getListUsuarios() {
+    /*public ArrayList<AdminUsuarios> getListUsuarios() {
         ArrayList<AdminUsuarios> list = DataBaseManager.getInstance().getListUsuariosDb();
         if (!list.isEmpty()) {
             for (AdminUsuarios item : list) {
@@ -29,5 +30,5 @@ public class AdminManager {
         }
         return list;
     }
-    
+    */
 }

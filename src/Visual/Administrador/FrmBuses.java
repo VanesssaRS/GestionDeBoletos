@@ -346,9 +346,9 @@ public class FrmBuses extends javax.swing.JFrame {
             int codigo = (int) tblBuses.getModel().getValueAt(selectRow,0);
             BusesManager.getInstance().deleteBus(codigo, new SingleCallBack() {
                 @Override
-                public void onSucces() {
+                public void onSucces(String msg) {
                     tblBuses.remove(selectRow);
-                    JOptionPane.showMessageDialog(null, "¡Se eliminó correctamente!");
+                    JOptionPane.showMessageDialog(null, msg);
                 }
 
                 @Override

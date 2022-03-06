@@ -184,8 +184,8 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
         if(Validaciones.validarStrings(cooperativa,lugarPartida,destino,hora) && date > 1L){
             ViajesManager.getInstance().insertViaje(cooperativa, lugarPartida, destino, date, hora, new SingleCallBack() {
                 @Override
-                public void onSucces() {
-                    JOptionPane.showMessageDialog(null, "¡Se agregó correctamente!");
+                public void onSucces(String msg) {
+                    JOptionPane.showMessageDialog(null, msg);
                 }
 
                 @Override
@@ -195,7 +195,7 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
             });
             return;
         }
-        JOptionPane.showMessageDialog(null, "¡Complete los formularios!");
+        JOptionPane.showMessageDialog(null, "¡Complete los campos!");
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**

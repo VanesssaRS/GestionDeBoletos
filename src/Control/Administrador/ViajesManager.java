@@ -1,6 +1,8 @@
 package Control.Administrador;
 
 import Control.SingleCallBack;
+import Control.Utils;
+import Control.Validaciones;
 import Model.Storage.DataBaseManager;
 import Model.Usuarios.Administrador.Modulos.AdminViajes;
 
@@ -28,8 +30,14 @@ public class ViajesManager {
      * @param callBack Informa si hubo fallo o no en el inserccion del documento
      */
     public void insertViaje(String cooperativa, String lugarpartida, String destino, long date , String hora, SingleCallBack callBack){
-        if(DataBaseManager.getInstance().insertViajes(cooperativa, lugarpartida, destino, date, hora)){
-            callBack.onSucces();
+        int idCooperativa = Utils.getIdCooperativa(cooperativa);
+        if (idCooperativa == 0) {
+            callBack.onFailed();
+            return;
+        }
+        String msg = DataBaseManager.getInstance().insertViajes(idCooperativa, lugarpartida, destino, date, hora);
+        if(Validaciones.validarStrings(msg)){
+            callBack.onSucces(msg);
             return;
         }
         callBack.onFailed();

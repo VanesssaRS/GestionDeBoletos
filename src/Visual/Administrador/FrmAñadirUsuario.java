@@ -341,7 +341,7 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
         if (Validaciones.validarStrings(nombre, apellido, cedula, email, telefono, direcc, usuario, contra, tipoUser) && fechanac != null) {
             UsuariosManager.getInstance().ingresarUsuario(nombre, apellido, cedula, email, telefono, new java.sql.Date(fechanac.getTime()), direcc, usuario, contra, tipoUser, new SingleCallBack() {
                 @Override
-                public void onSucces() {
+                public void onSucces(String msg) {
                     JOptionPane.showMessageDialog(null, "¡Se insertó correctamente!");
                 }
 

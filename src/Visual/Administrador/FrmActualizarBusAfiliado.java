@@ -168,8 +168,8 @@ public class FrmActualizarBusAfiliado extends javax.swing.JFrame {
         if (Validaciones.validarStrings(placa, coop)) {
             BusesManager.getInstance().updateBuses(codigo, numAsientos, placa, coop, new SingleCallBack() {
                 @Override
-                public void onSucces() {
-                    JOptionPane.showMessageDialog(null, "¡Se actualizó correctamente!");
+                public void onSucces(String msg) {
+                    JOptionPane.showMessageDialog(null, msg);
                 }
 
                 @Override

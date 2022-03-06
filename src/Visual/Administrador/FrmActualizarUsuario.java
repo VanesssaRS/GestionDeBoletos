@@ -263,8 +263,8 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
 
             UsuariosManager.getInstance().actualizarUsuario(codigo, cedula, nombre, apellido, email, telefono, date, direccion, tipouser, new SingleCallBack() {
                 @Override
-                public void onSucces() {
-                    JOptionPane.showMessageDialog(null, "¡Se actualizó correctamente!");
+                public void onSucces(String msg) {
+                    JOptionPane.showMessageDialog(null, msg);
                 }
 
                 @Override

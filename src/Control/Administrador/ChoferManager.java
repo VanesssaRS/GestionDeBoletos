@@ -28,7 +28,7 @@ public class ChoferManager {
         return instamce;
     }
     //LISTA DE USUARIOS
-    public ArrayList<AdminChofer> getListChofer() {
+    /*public ArrayList<AdminChofer> getListChofer() {
         ArrayList<AdminChofer> list = DataBaseManager.getInstance().getListChoferDb();
         if (!list.isEmpty()) {
             for (AdminChofer item : list) {
@@ -36,5 +36,5 @@ public class ChoferManager {
             }
         }
         return list;
-    }
+    }*/
 }

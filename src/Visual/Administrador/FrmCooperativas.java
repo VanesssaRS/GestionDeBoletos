@@ -332,9 +332,9 @@ public class FrmCooperativas extends javax.swing.JFrame {
             int codigo = (int) tblCooperativas.getModel().getValueAt(rowSelectect,0);
             CooperativasManager.getInstance().deleteCooperativa(codigo, new SingleCallBack() {
                 @Override
-                public void onSucces() {
+                public void onSucces(String msg) {
                     ((DefaultTableModel)tblCooperativas.getModel()).removeRow(rowSelectect);
-                    JOptionPane.showMessageDialog(null, "¡Se eliminó correctamente!");
+                    JOptionPane.showMessageDialog(null, msg);
                 }
 
                 @Override

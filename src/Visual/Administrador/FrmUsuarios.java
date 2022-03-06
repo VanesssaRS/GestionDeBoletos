@@ -358,9 +358,9 @@ public class FrmUsuarios extends javax.swing.JFrame {
             int codigo = (int) tblUsuarios.getModel().getValueAt(rowSelectect,0);
             UsuariosManager.getInstance().deleteUsuarios(codigo, new SingleCallBack() {
                 @Override
-                public void onSucces() {
+                public void onSucces(String msg) {
                     ((DefaultTableModel)tblUsuarios.getModel()).removeRow(rowSelectect);
-                    JOptionPane.showMessageDialog(null, "¡Se eliminó correctamente!");
+                    JOptionPane.showMessageDialog(null, msg);
                 }
 
                 @Override

@@ -145,7 +145,7 @@ public class FrmAñadirBusAfiliado extends javax.swing.JFrame {
         if(Validaciones.validarStrings(placa,cooperativa)){
             BusesManager.getInstance().agregarBusAfiliado(placa, numAsientos, cooperativa, new SingleCallBack() {
                 @Override
-                public void onSucces() {
+                public void onSucces(String msg) {
                     JOptionPane.showMessageDialog(null, "¡Se agregó correctamente!");
                 }
 

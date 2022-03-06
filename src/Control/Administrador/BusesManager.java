@@ -36,8 +36,9 @@ public class BusesManager {
             callBack.onFailed();
             return;
         }
-        if (DataBaseManager.getInstance().insertBusesAfiliados(placa, asientos, idCooperativa)) {
-            callBack.onSucces();
+        String msg = DataBaseManager.getInstance().insertBusesAfiliados(placa, asientos, idCooperativa);
+        if (msg != null && !msg.equals("")) {
+            callBack.onSucces(msg);
             return;
         }
         callBack.onFailed();
@@ -58,8 +59,9 @@ public class BusesManager {
             callBack.onFailed();
             return;
         }
+
         if (DataBaseManager.getInstance().upadateBuses(codigo, asientos, placa, idCoop)) {
-            callBack.onSucces();
+            callBack.onSucces("Se ha actualizado correctamente");
             return;
         }
         callBack.onFailed();
@@ -67,8 +69,7 @@ public class BusesManager {
 
     public void deleteBus(int id, SingleCallBack callBack){
         if(DataBaseManager.getInstance().deleteBus(id)){
-            busesManager.remove(id);
-            callBack.onSucces();
+            callBack.onSucces("Se ha eliminado correctament");
         }
     }
 

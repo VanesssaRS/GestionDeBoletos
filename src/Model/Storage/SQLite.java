@@ -9,6 +9,7 @@ public class SQLite {
     private static SQLite instance;
     private Connection connection;
 
+
     public static SQLite getInstance(){
         if(instance == null){
             instance = new SQLite();
@@ -18,7 +19,12 @@ public class SQLite {
 
     public Connection open() {
         try {
-            connection = DriverManager.getConnection("jdbc:sqlite:dbTickerr.db");
+            String driver = "com.mysql.cj.jdbc.Driver";
+            String user = "root";
+            String pass = "callofduty1";
+            String url = "jdbc:mysql://localhost:3306/dbo";
+            Class.forName(driver);
+            connection = DriverManager.getConnection(url, user, pass);
             if (connection != null) {
                 System.out.println("Conexión exitosa!");
                 return connection;

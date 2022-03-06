@@ -2,6 +2,7 @@ package Control.Administrador;
 
 
 import Control.SingleCallBack;
+import Control.Validaciones;
 import Model.Storage.DataBaseManager;
 import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
 import Model.Usuarios.Administrador.Modulos.AdminUsuarios;
@@ -23,10 +24,28 @@ public class UsuariosManager {
         return instace;
     }
 
+    /**
+     * Se prepara para enviar los datos a la base de datos.
+     *
+     * @param nombre
+     * @param apellido
+     * @param cedula
+     * @param email
+     * @param telefono
+     * @param date
+     * @param direccion
+     * @param usuario
+     * @param contrasena
+     * @param tipoUser
+     * @param callBack
+     */
     public void ingresarUsuario(String nombre, String apellido, String cedula, String email, String telefono, Date date, String direccion, String usuario, String contrasena, String tipoUser, SingleCallBack callBack) {
         TipoUsuario tpouser = TipoUsuario.getValue(tipoUser);
-        if (tpouser != null && DataBaseManager.getInstance().insertarUsuario(nombre, apellido, cedula, email, telefono, date, direccion, usuario, contrasena, tpouser.ordinal())) {
-            callBack.onSucces();
+        if (tpouser != null ) {
+            String msg = DataBaseManager.getInstance().insertarUsuario(nombre, apellido, cedula, email, telefono, date, direccion, usuario, contrasena, tpouser.ordinal());
+            if(Validaciones.validarStrings(msg)){
+                callBack.onSucces(msg);
+            }
             return;
         }
         callBack.onFailed();
@@ -49,7 +68,7 @@ public class UsuariosManager {
 
     public void deleteUsuarios(int id, SingleCallBack callBack) {
         if (DataBaseManager.getInstance().deleteUsuario(id)) {
-            callBack.onSucces();
+            callBack.onSucces("Se ha eliminado al usuario correctamente");
             return;
         }
         callBack.onFailed();
@@ -72,7 +91,7 @@ public class UsuariosManager {
     public void actualizarUsuario(String codigo, String cedula, String nombre, String apellido, String email, String telefono, Date date, String direccion, String tipoUser, SingleCallBack callBack) {
         TipoUsuario typeUser = TipoUsuario.getValue(tipoUser);
         if (typeUser != null && DataBaseManager.getInstance().updateUsuario(Integer.parseInt(codigo), cedula, nombre, apellido, email, Integer.parseInt(telefono), date, direccion, typeUser.name())) {
-            callBack.onSucces();
+            callBack.onSucces("Se ha actualizado el usuario correctamtente");
             return;
         }
         callBack.onFailed();

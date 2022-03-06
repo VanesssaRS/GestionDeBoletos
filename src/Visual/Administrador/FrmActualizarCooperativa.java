@@ -161,8 +161,8 @@ public class FrmActualizarCooperativa extends javax.swing.JFrame {
         if (Validaciones.validarStrings(codigoProvi, nombre)) {
             CooperativasManager.getInstance().updateCooperativa(nombre, codigo, numBuses, codigoProvi, new SingleCallBack() {
                 @Override
-                public void onSucces() {
-                    JOptionPane.showMessageDialog(null, "¡Se actualizó correctamente!");
+                public void onSucces(String msg) {
+                    JOptionPane.showMessageDialog(null, msg);
                 }
 
                 @Override
