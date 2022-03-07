@@ -4,8 +4,10 @@ import Control.SingleCallBack;
 import Control.Utils;
 import Control.Validaciones;
 import Model.Storage.DataBaseManager;
+import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
 import Model.Usuarios.Administrador.Modulos.AdminViajes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ViajesManager {
@@ -41,5 +43,9 @@ public class ViajesManager {
             return;
         }
         callBack.onFailed();
+    }
+
+    public ArrayList<AdminViajes> getViajes() {
+        return DataBaseManager.getInstance().getViajes();
     }
 }

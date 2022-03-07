@@ -4,47 +4,43 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class AdminViajes {
-    private int id;
-    private Date fechaViaje;
-    private Timestamp timestamp;
-    private int idRuta;
+    private int id_viaje;
+    private String destino;
+    private String partida;
+    private Date fecha;
+    private String hora;
+    private String nombreCooperativa;
 
-    public AdminViajes(int id, Date fechaViaje, Timestamp timestamp, int idRuta) {
-        this.id = id;
-        this.fechaViaje = fechaViaje;
-        this.timestamp = timestamp;
-        this.idRuta = idRuta;
+    public AdminViajes(int id_viaje, String destino, String partida, Date fecha, String hora, String nombreCooperativa) {
+        this.id_viaje = id_viaje;
+        this.destino = destino;
+        this.partida = partida;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.nombreCooperativa = nombreCooperativa;
     }
 
-    public int getId() {
-        return id;
+    public int getId_viaje() {
+        return id_viaje;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getDestino() {
+        return destino;
     }
 
-    public Date getFechaViaje() {
-        return fechaViaje;
+    public String getPartida() {
+        return partida;
     }
 
-    public void setFechaViaje(Date fechaViaje) {
-        this.fechaViaje = fechaViaje;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
+    public String getHora() {
+        return hora;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public int getIdRuta() {
-        return idRuta;
-    }
-
-    public void setIdRuta(int idRuta) {
-        this.idRuta = idRuta;
+    public String getNombreCooperativa() {
+        return nombreCooperativa;
     }
 }

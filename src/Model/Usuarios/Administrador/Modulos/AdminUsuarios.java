@@ -8,12 +8,12 @@ public class AdminUsuarios {
     String apellido;
     String cedula;
     String email;
-    int telefono;
+    String telefono;
     Date fechanac;
     String direcc;
     TipoUsuario tipoUser;
 
-    public AdminUsuarios(int code,String nombre, String cedula,String email,int telefono,Date fechanac,String direcc,TipoUsuario tipouser,String apellido) {
+    public AdminUsuarios(int code,String nombre, String cedula,String email,String telefono,Date fechanac,String direcc,TipoUsuario tipouser,String apellido) {
         this.code = code;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -45,7 +45,7 @@ public class AdminUsuarios {
         return email;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 

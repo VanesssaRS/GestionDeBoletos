@@ -19,7 +19,7 @@ import java.util.Date;
  * @author 59397
  */
 public class FrmAñadirViaje extends javax.swing.JFrame {
-
+    //Funciona :D
     /**
      * Creates new form FrmAñadirCooperativa
      */

@@ -15,7 +15,7 @@ public enum TipoUsuario {
 
     public static TipoUsuario getValue(String index) {
         for (TipoUsuario member : TipoUsuario.values()) {
-            if (member.name().equals(index)) {
+            if (member.name().equalsIgnoreCase(index)) {
                 return member;
             }
         }

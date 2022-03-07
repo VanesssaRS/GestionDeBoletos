@@ -342,7 +342,7 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
             UsuariosManager.getInstance().ingresarUsuario(nombre, apellido, cedula, email, telefono, new java.sql.Date(fechanac.getTime()), direcc, usuario, contra, tipoUser, new SingleCallBack() {
                 @Override
                 public void onSucces(String msg) {
-                    JOptionPane.showMessageDialog(null, "¡Se insertó correctamente!");
+                    JOptionPane.showMessageDialog(null, msg);
                 }
 
                 @Override

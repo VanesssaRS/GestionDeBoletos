@@ -40,7 +40,7 @@ public class UsuariosManager {
      * @param callBack
      */
     public void ingresarUsuario(String nombre, String apellido, String cedula, String email, String telefono, Date date, String direccion, String usuario, String contrasena, String tipoUser, SingleCallBack callBack) {
-        TipoUsuario tpouser = TipoUsuario.getValue(tipoUser);
+        TipoUsuario tpouser = TipoUsuario.getValue(tipoUser.trim());
         if (tpouser != null ) {
             String msg = DataBaseManager.getInstance().insertarUsuario(nombre, apellido, cedula, email, telefono, date, direccion, usuario, contrasena, tpouser.ordinal());
             if(Validaciones.validarStrings(msg)){

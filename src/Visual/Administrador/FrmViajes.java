@@ -5,6 +5,14 @@
  */
 package Visual.Administrador;
 
+import Control.Administrador.CooperativasManager;
+import Control.Administrador.UsuariosManager;
+import Control.Administrador.ViajesManager;
+import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
+import Model.Usuarios.Administrador.Modulos.AdminUsuarios;
+import Model.Usuarios.Administrador.Modulos.AdminViajes;
+
+import javax.swing.table.DefaultTableModel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -25,6 +33,7 @@ public class FrmViajes extends javax.swing.JFrame {
         lblFechaSistema.setText(fechasistema.format(fecha));
         SimpleDateFormat horasistema = new SimpleDateFormat("HH:mm");
         lblHora.setText(horasistema.format(fecha));
+        insertDataInTable();
     }
 
     /**
@@ -314,6 +323,22 @@ public class FrmViajes extends javax.swing.JFrame {
         FrmActualizarViaje frmActualizarViaje= new FrmActualizarViaje();
         frmActualizarViaje.setVisible(true);
     }//GEN-LAST:event_btnActualizarMouseClicked
+
+    public void insertDataInTable() {
+        DefaultTableModel modelo = (DefaultTableModel) tblViajes.getModel();
+        if (modelo != null) {
+            for (AdminViajes item : ViajesManager.getInstance().getViajes()) {
+                Object[] fila = new Object[10];
+                fila[0] = item.getId_viaje();
+                fila[1] = item.getNombreCooperativa();
+                fila[2] = item.getDestino();
+                fila[3] = item.getFecha();
+                fila[4] = item.getHora();
+                modelo.addRow(fila);
+                tblViajes.setModel(modelo);
+            }
+        }
+    }
 
     /**
      * @param args the command line arguments

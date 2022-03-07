@@ -27,11 +27,18 @@ public class DataBaseManager {
     public ArrayList<AdminViajes> getViajes() {
         ArrayList<AdminViajes> list = new ArrayList<>();
         try {
-            Statement statement = database.open().createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM VIAJES");
+            String sql = "{CALL obtenerViajes()}";
+            CallableStatement callableStatement = database.open().prepareCall(sql);
+            ResultSet resultSet = callableStatement.executeQuery();
             while (resultSet.next()) {
-                list.add(new AdminViajes(resultSet.getInt("id"), resultSet.getDate("FechaDate"), resultSet.getTimestamp("Horario"), resultSet.getInt("ruta_Id_Ruta")));
+                list.add(new AdminViajes(resultSet.getInt("id_viaje"),
+                        resultSet.getString("Destino"),
+                        resultSet.getString("Partida"),
+                        new java.util.Date(resultSet.getDate("Fecha").getTime()),
+                        resultSet.getString("Hora"),
+                        resultSet.getString("Nombre_Cooperativa")));
             }
+            resultSet.close();
             return list;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -44,6 +51,7 @@ public class DataBaseManager {
         try {
             Statement statement = database.open().createStatement();
             statement.executeQuery("DELETE * FROM VIAJES WHERE id=" + id);
+            statement.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -217,7 +225,7 @@ public class DataBaseManager {
             pp.setString(7, telefono);
             pp.setDate(8, date);
             pp.setString(9, direccion);
-            pp.setInt(10, tipoUser);
+            pp.setInt(10, tipoUser+1);
             ResultSet rs = pp.executeQuery();
             while (rs.next()) {
                 msg = rs.getString("Mensaje");
@@ -264,12 +272,13 @@ public class DataBaseManager {
                         resultSet.getString("Nombre"),
                         resultSet.getString("Cedula"),
                         resultSet.getString("Email"),
-                        resultSet.getInt("Telefono"),
-                        new java.util.Date(Long.parseLong(resultSet.getString("FechaNacimiento"))),
+                        resultSet.getString("Telefono"),
+                        new java.util.Date(resultSet.getDate("FechaNacimiento").getTime()),
                         resultSet.getString("Direccion"),
                         TipoUsuario.getOrdinal(resultSet.getInt("id_tipoUser")),
                         resultSet.getString("Apellido")));
             }
+            resultSet.close();
             return list;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -283,11 +292,11 @@ public class DataBaseManager {
         String msg = "";
         try {
             CallableStatement pp = database.open().prepareCall(sql);
-            pp.setString(1, lugarpartida);
+            pp.setInt(1, cooperativa);
             pp.setString(2, destino);
-            pp.setDate(3, new Date(date));
-            pp.setString(4, hora);
-            pp.setInt(5, cooperativa);
+            pp.setString(3, lugarpartida);
+            pp.setDate(4, new Date(date));
+            pp.setString(5, hora);
             ResultSet rs = pp.executeQuery();
             while (rs.next()) {
                 msg = rs.getString("Mensaje");

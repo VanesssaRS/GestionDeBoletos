@@ -19,7 +19,7 @@ import javax.swing.*;
  * @author 59397
  */
 public class FrmAñadirBusAfiliado extends javax.swing.JFrame {
-
+    //Funciona :D
     /**
      * Creates new form FrmAñadirCooperativa
      */
@@ -146,12 +146,12 @@ public class FrmAñadirBusAfiliado extends javax.swing.JFrame {
             BusesManager.getInstance().agregarBusAfiliado(placa, numAsientos, cooperativa, new SingleCallBack() {
                 @Override
                 public void onSucces(String msg) {
-                    JOptionPane.showMessageDialog(null, "¡Se agregó correctamente!");
+                    JOptionPane.showMessageDialog(null, msg);
                 }
 
                 @Override
                 public void onFailed() {
-                    JOptionPane.showMessageDialog(null, "¡Error en la inserción de datos!");
+                    JOptionPane.showMessageDialog(null, "¡Error en la base de datos!");
                 }
             });
             return;
