@@ -8,20 +8,27 @@ package Visual.Administrador;
 import Control.Administrador.UsuariosManager;
 import Control.SingleCallBack;
 import Control.Validaciones;
+import Model.Usuarios.Administrador.Modulos.AdminUsuarios;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Date;
 
 /**
  * @author 59397
  */
 public class FrmActualizarUsuario extends javax.swing.JFrame {
-
+    //Funcionaaaa :D
     /**
      * Creates new form FrmAñadirCooperativa
      */
-    public FrmActualizarUsuario() {
+    private AdminUsuarios adminUsuarios;
+
+    public FrmActualizarUsuario(AdminUsuarios adminUsuarios) {
+        this.adminUsuarios = adminUsuarios;
         initComponents();
+        addValuesOnField();
         insertComboValue();
     }
 
@@ -54,14 +61,12 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         cmbTipoUsuarioAU = new javax.swing.JComboBox<>();
         jCalendarFechaNac = new com.toedter.calendar.JDateChooser();
-        jLabel14 = new javax.swing.JLabel();
-        txtCodigo = new javax.swing.JTextField();
         txtCedulaAU = new javax.swing.JTextField();
 
         jLabel13.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel13.setText("Cedula:");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Actualizar Usuario");
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
@@ -122,13 +127,6 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel12.setText("Tipo Usuario:");
 
-        cmbTipoUsuarioAU.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vendedor", "Administrador", " " }));
-
-        jLabel14.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jLabel14.setText("Codigo:");
-
-        txtCodigo.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-
         txtCedulaAU.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -148,8 +146,7 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
                                         .addComponent(jLabel6)
                                         .addComponent(jLabel9)
                                         .addComponent(jLabel4)
-                                        .addComponent(jLabel2)
-                                        .addComponent(jLabel14))
+                                        .addComponent(jLabel2))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(txtApellidoAU, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -160,7 +157,6 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                     .addComponent(txtEmailAu, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
                                                     .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))))
-                                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtCedulaAU, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -190,12 +186,9 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtCedulaAU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -238,19 +231,33 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void insertComboValue(){
-        for (String item: UsuariosManager.getInstance().getDataSource()){
+
+    private void insertComboValue() {
+        for (String item : UsuariosManager.getInstance().getDataSource()) {
             cmbTipoUsuarioAU.addItem(item);
         }
     }
+
+    public void addValuesOnField() {
+        txtCedulaAU.setText(adminUsuarios.getCedula());
+        txtApellidoAU.setText(adminUsuarios.getApellido());
+        txtNombreActuallizarUsuario.setText(adminUsuarios.getNombre());
+        txtEmailAu.setText(adminUsuarios.getEmail());
+        txtTelefono.setText(adminUsuarios.getTelefono());
+        jCalendarFechaNac.setDate(adminUsuarios.getFechanac());
+        txtDirecciónAU.setText(adminUsuarios.getDirecc());
+    }
+
+
+
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        String codigo = txtCodigo.getText();
+        int codigo = adminUsuarios.getCode();
         String cedula = txtCedulaAU.getText();
         String nombre = txtNombreActuallizarUsuario.getText();
         String apellido = txtApellidoAU.getText();
@@ -259,7 +266,8 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
         Date date = new Date(jCalendarFechaNac.getDate().getTime());
         String direccion = txtDirecciónAU.getText();
         String tipouser = (String) cmbTipoUsuarioAU.getSelectedItem();
-        if (Validaciones.validarStrings(codigo, cedula, nombre, apellido, email, direccion, tipouser)) {
+        System.out.println(tipouser);
+        if (Validaciones.validarStrings(cedula, nombre, apellido, email, direccion, tipouser)) {
 
             UsuariosManager.getInstance().actualizarUsuario(codigo, cedula, nombre, apellido, email, telefono, date, direccion, tipouser, new SingleCallBack() {
                 @Override
@@ -347,7 +355,7 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmActualizarUsuario().setVisible(true);
+                new FrmActualizarUsuario(null).setVisible(true);
             }
         });
     }
@@ -360,7 +368,6 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -371,7 +378,6 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField txtApellidoAU;
     private javax.swing.JTextField txtCedulaAU;
-    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDirecciónAU;
     private javax.swing.JTextField txtEmailAu;
     private javax.swing.JTextField txtNombreActuallizarUsuario;

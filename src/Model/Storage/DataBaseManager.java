@@ -27,6 +27,7 @@ public class DataBaseManager {
     public ArrayList<AdminViajes> getViajes() {
         ArrayList<AdminViajes> list = new ArrayList<>();
         try {
+
             String sql = "{CALL obtenerViajes()}";
             CallableStatement callableStatement = database.open().prepareCall(sql);
             ResultSet resultSet = callableStatement.executeQuery();
@@ -36,7 +37,7 @@ public class DataBaseManager {
                         resultSet.getString("Partida"),
                         new java.util.Date(resultSet.getDate("Fecha").getTime()),
                         resultSet.getString("Hora"),
-                        resultSet.getString("Nombre_Cooperativa")));
+                        resultSet.getString("Nombre_Cooperativa"), resultSet.getString("Placa")));
             }
             resultSet.close();
             return list;
@@ -47,15 +48,18 @@ public class DataBaseManager {
         return list;
     }
 
-    public void deleteViaje(int id) {
+    public boolean deleteViaje(int id) {
         try {
-            Statement statement = database.open().createStatement();
-            statement.executeQuery("DELETE * FROM VIAJES WHERE id=" + id);
+            PreparedStatement statement = database.open().prepareStatement("DELETE FROM viaje WHERE id_viaje=" + id);
+            statement.executeUpdate();
             statement.close();
+            return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
+            database.close();
         }
-        database.close();
+        return false;
+
     }
 
     /**
@@ -135,7 +139,7 @@ public class DataBaseManager {
 
     public boolean deleteUsuario(int id) {
         try {
-            PreparedStatement statement = database.open().prepareStatement("DELETE FROM usuario WHERE id=" + id);
+            PreparedStatement statement = database.open().prepareStatement("DELETE FROM persona WHERE id_persona =" + id);
             statement.executeUpdate();
             database.close();
             return true;
@@ -153,6 +157,25 @@ public class DataBaseManager {
             while (resultSet.next()) {
                 list.add(new AdminBuses(resultSet.getInt("id"), resultSet.getString("Placa"), resultSet.getInt("Num_Asientos"), resultSet.getInt("id_cooperativa")));
             }
+            return list;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        database.close();
+        return list;
+    }
+
+    public ArrayList<String> getBusesPorCoop(String cooperativa) {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            String sql = "{CALL obtenerBusesPorCooperativa(?)}";
+            CallableStatement callableStatement = database.open().prepareCall(sql);
+            callableStatement.setString(1, cooperativa);
+            ResultSet resultSet = callableStatement.executeQuery();
+            while (resultSet.next()) {
+                list.add(resultSet.getString("Placa"));
+            }
+            resultSet.close();
             return list;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -225,7 +248,7 @@ public class DataBaseManager {
             pp.setString(7, telefono);
             pp.setDate(8, date);
             pp.setString(9, direccion);
-            pp.setInt(10, tipoUser+1);
+            pp.setInt(10, tipoUser + 1);
             ResultSet rs = pp.executeQuery();
             while (rs.next()) {
                 msg = rs.getString("Mensaje");
@@ -238,26 +261,30 @@ public class DataBaseManager {
         }
     }
 
-    public boolean updateUsuario(int codigo, String cedula, String nombre, String apellido, String email, int telefono, Date date, String direccion, String tipoUser) {
-        String sql = "UPDATE Persona SET Nombre=? ,Cedula=? ,Email=? ,Telefono=? ,FechaNac=? ,Direccion=? ,TipoUser=? ,Apellido=?  WHERE id=?";
+    public String updateUsuario(int codigo, String cedula, String nombre, String apellido, String email, String telefono, Date date, String direccion, int tipoUser) {
+        String sql = "{CALL actualizarUsuario(?,?,?,?,?,?,?,?,?)}";
+        String msg = "";
         try {
-            PreparedStatement pp = database.open().prepareStatement(sql);
-            pp.setString(1, nombre);
+            CallableStatement pp = database.open().prepareCall(sql);
+            pp.setInt(1, codigo);
             pp.setString(2, cedula);
-            pp.setString(3, email);
-            pp.setInt(4, telefono);
-            pp.setDate(5, date);
-            pp.setString(6, direccion);
-            pp.setInt(7, 1);
-            pp.setString(8, apellido);
-            pp.setInt(9, codigo);
-            pp.executeUpdate();
-            database.close();
-            return true;
+            pp.setString(3, nombre);
+            pp.setString(4, apellido);
+            pp.setString(5, email);
+            pp.setString(6, telefono);
+            pp.setDate(7, date);
+            pp.setString(8, direccion);
+            pp.setInt(9, tipoUser);
+            ResultSet rs = pp.executeQuery();
+            while (rs.next()) {
+                msg = rs.getString("Mensaje");
+            }
+            pp.close();
+            return msg;
         } catch (SQLException ex) {
             ex.printStackTrace();
             database.close();
-            return false;
+            return null;
         }
     }
 
@@ -287,16 +314,17 @@ public class DataBaseManager {
         return list;
     }
 
-    public String insertViajes(int cooperativa, String lugarpartida, String destino, long date, String hora) {
-        String sql = "{CALL crearViaje(?,?,?,?,?)}";
+    public String insertViajes(int cooperativa, String bus, String lugarpartida, String destino, long date, String hora) {
+        String sql = "{CALL crearViaje(?,?,?,?,?,?)}";
         String msg = "";
         try {
             CallableStatement pp = database.open().prepareCall(sql);
             pp.setInt(1, cooperativa);
-            pp.setString(2, destino);
-            pp.setString(3, lugarpartida);
-            pp.setDate(4, new Date(date));
-            pp.setString(5, hora);
+            pp.setString(2, bus);
+            pp.setString(3, destino);
+            pp.setString(4, lugarpartida);
+            pp.setDate(5, new Date(date));
+            pp.setString(6, hora);
             ResultSet rs = pp.executeQuery();
             while (rs.next()) {
                 msg = rs.getString("Mensaje");

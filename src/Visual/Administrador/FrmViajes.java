@@ -8,10 +8,12 @@ package Visual.Administrador;
 import Control.Administrador.CooperativasManager;
 import Control.Administrador.UsuariosManager;
 import Control.Administrador.ViajesManager;
+import Control.SingleCallBack;
 import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
 import Model.Usuarios.Administrador.Modulos.AdminUsuarios;
 import Model.Usuarios.Administrador.Modulos.AdminViajes;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,7 +29,6 @@ public class FrmViajes extends javax.swing.JFrame {
      * Creates new form UsuariosNRT
      */
     public FrmViajes() {
-        
         initComponents();
         SimpleDateFormat fechasistema = new SimpleDateFormat("dd - MM - yyyy");
         lblFechaSistema.setText(fechasistema.format(fecha));
@@ -92,11 +93,11 @@ public class FrmViajes extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo", "Cooperativa", "Destino", "Fecha", "Horario"
+                "Codigo", "Cooperativa", "Bus", "Destino", "Partida", "Fecha", "Horario"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -124,6 +125,11 @@ public class FrmViajes extends javax.swing.JFrame {
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Visual/img/eliminaricon.png"))); // NOI18N
         btnEliminar.setText("    Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -320,9 +326,43 @@ public class FrmViajes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAñadirMouseClicked
 
     private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
-        FrmActualizarViaje frmActualizarViaje= new FrmActualizarViaje();
-        frmActualizarViaje.setVisible(true);
+        int rowSelected = tblViajes.getSelectedRow();
+        if(rowSelected >= 0){
+            int codigo = (int) tblViajes.getModel().getValueAt(rowSelected,0);
+            String cooperativa = (String) tblViajes.getModel().getValueAt(rowSelected,1);
+            String bus = (String) tblViajes.getModel().getValueAt(rowSelected,2);
+            String destino = (String) tblViajes.getModel().getValueAt(rowSelected,3);
+            String partida = (String) tblViajes.getModel().getValueAt(rowSelected,4);
+            Date fecha = (Date) tblViajes.getModel().getValueAt(rowSelected,5);
+            String horario = (String) tblViajes.getModel().getValueAt(rowSelected,6);
+            FrmActualizarViaje frmActualizarViaje= new FrmActualizarViaje(new AdminViajes(codigo,destino,partida,fecha,horario,cooperativa,bus));
+            frmActualizarViaje.setVisible(true);
+        }
+
     }//GEN-LAST:event_btnActualizarMouseClicked
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        int rowSelected = tblViajes.getSelectedRow();
+        if(rowSelected >= 0){
+            int codigo = (int) tblViajes.getModel().getValueAt(rowSelected,0);
+            ViajesManager.getInstance().deleteViaje(codigo, new SingleCallBack() {
+                @Override
+                public void onSucces(String msg) {
+                    ((DefaultTableModel)tblViajes.getModel()).removeRow(rowSelected);
+                    JOptionPane.showMessageDialog(null, msg);
+                }
+
+                @Override
+                public void onFailed() {
+                    JOptionPane.showMessageDialog(null, "¡Ha ocurrido un error al eliminar los datos!");
+
+                }
+            });
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "¡Selecciona un viaje!");
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     public void insertDataInTable() {
         DefaultTableModel modelo = (DefaultTableModel) tblViajes.getModel();
@@ -331,9 +371,11 @@ public class FrmViajes extends javax.swing.JFrame {
                 Object[] fila = new Object[10];
                 fila[0] = item.getId_viaje();
                 fila[1] = item.getNombreCooperativa();
-                fila[2] = item.getDestino();
-                fila[3] = item.getFecha();
-                fila[4] = item.getHora();
+                fila[2] = item.getBus();
+                fila[3] = item.getDestino();
+                fila[4] = item.getPartida();
+                fila[5] = item.getFecha();
+                fila[6] = item.getHora();
                 modelo.addRow(fila);
                 tblViajes.setModel(modelo);
             }

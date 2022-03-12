@@ -41,9 +41,9 @@ public class UsuariosManager {
      */
     public void ingresarUsuario(String nombre, String apellido, String cedula, String email, String telefono, Date date, String direccion, String usuario, String contrasena, String tipoUser, SingleCallBack callBack) {
         TipoUsuario tpouser = TipoUsuario.getValue(tipoUser.trim());
-        if (tpouser != null ) {
+        if (tpouser != null) {
             String msg = DataBaseManager.getInstance().insertarUsuario(nombre, apellido, cedula, email, telefono, date, direccion, usuario, contrasena, tpouser.ordinal());
-            if(Validaciones.validarStrings(msg)){
+            if (Validaciones.validarStrings(msg)) {
                 callBack.onSucces(msg);
             }
             return;
@@ -82,17 +82,23 @@ public class UsuariosManager {
     public ArrayList<String> getDataSource() {
         ArrayList<String> list = new ArrayList<>();
         for (TipoUsuario tipoUsuario : TipoUsuario.values()) {
-            if (tipoUsuario.equals(TipoUsuario.CHOFER)) continue;
+            if (tipoUsuario.equals(TipoUsuario.CHOFER)){
+                continue;
+            }
             list.add(tipoUsuario.name());
         }
         return list;
     }
 
-    public void actualizarUsuario(String codigo, String cedula, String nombre, String apellido, String email, String telefono, Date date, String direccion, String tipoUser, SingleCallBack callBack) {
-        TipoUsuario typeUser = TipoUsuario.getValue(tipoUser);
-        if (typeUser != null && DataBaseManager.getInstance().updateUsuario(Integer.parseInt(codigo), cedula, nombre, apellido, email, Integer.parseInt(telefono), date, direccion, typeUser.name())) {
-            callBack.onSucces("Se ha actualizado el usuario correctamtente");
-            return;
+    public void actualizarUsuario(int codigo, String cedula, String nombre, String apellido, String email, String telefono, Date date, String direccion, String tipoUser, SingleCallBack callBack) {
+        int typeUser = TipoUsuario.getValueInt(tipoUser);
+
+        if (typeUser > 0) {
+            String msg = DataBaseManager.getInstance().updateUsuario(codigo, cedula, nombre, apellido, email, telefono, date, direccion, typeUser);
+            if (Validaciones.validarStrings(msg)) {
+                callBack.onSucces("Se ha actualizado el usuario correctamtente");
+                return;
+            }
         }
         callBack.onFailed();
     }

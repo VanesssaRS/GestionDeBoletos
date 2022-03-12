@@ -18,7 +18,7 @@ import javax.swing.*;
  * @author 59397
  */
 public class FrmActualizarBusAfiliado extends javax.swing.JFrame {
-
+    //Funciona :D
     /**
      * Creates new form FrmAñadirCooperativa
      */

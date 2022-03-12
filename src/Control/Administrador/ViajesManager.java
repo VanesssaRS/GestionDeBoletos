@@ -31,15 +31,23 @@ public class ViajesManager {
      * @param hora Hora del viaje
      * @param callBack Informa si hubo fallo o no en el inserccion del documento
      */
-    public void insertViaje(String cooperativa, String lugarpartida, String destino, long date , String hora, SingleCallBack callBack){
+    public void insertViaje(String cooperativa, String bus, String lugarpartida, String destino, long date , String hora, SingleCallBack callBack){
         int idCooperativa = Utils.getIdCooperativa(cooperativa);
         if (idCooperativa == 0) {
             callBack.onFailed();
             return;
         }
-        String msg = DataBaseManager.getInstance().insertViajes(idCooperativa, lugarpartida, destino, date, hora);
+        String msg = DataBaseManager.getInstance().insertViajes(idCooperativa, bus, lugarpartida, destino, date, hora);
         if(Validaciones.validarStrings(msg)){
             callBack.onSucces(msg);
+            return;
+        }
+        callBack.onFailed();
+    }
+
+    public void deleteViaje(int codigo,SingleCallBack callBack){
+        if(DataBaseManager.getInstance().deleteViaje(codigo)){
+            callBack.onSucces("Eliminado correctamente");
             return;
         }
         callBack.onFailed();

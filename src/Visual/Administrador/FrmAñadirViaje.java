@@ -5,6 +5,7 @@
  */
 package Visual.Administrador;
 
+import Control.Administrador.BusesManager;
 import Control.Administrador.CooperativasManager;
 import Control.Administrador.ViajesManager;
 import Control.SingleCallBack;
@@ -12,14 +13,15 @@ import Control.Validaciones;
 import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
 
 import javax.swing.*;
+import java.awt.event.ItemEvent;
 import java.util.Date;
 
 /**
- *
  * @author 59397
  */
 public class FrmAñadirViaje extends javax.swing.JFrame {
     //Funciona :D
+    private String selectedItem = "";
     /**
      * Creates new form FrmAñadirCooperativa
      */
@@ -28,8 +30,9 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
         insertDataCombo();
     }
 
-    public void insertDataCombo(){
-        for (AdminCooperativas item: CooperativasManager.getInstance().getListCooperativas()){
+
+    public void insertDataCombo() {
+        for (AdminCooperativas item : CooperativasManager.getInstance().getListCooperativas()) {
             cmbCooperativa.addItem(item.getNombreCooperativa());
         }
     }
@@ -56,8 +59,10 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
         txtlugarDestino = new javax.swing.JTextField();
         txtLugarDePartida = new javax.swing.JTextField();
         jcFecha = new com.toedter.calendar.JDateChooser();
+        cmbBuses = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Añadir Viaje");
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
@@ -88,87 +93,102 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel5.setText("Hora:");
 
+        cmbCooperativa.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbCooperativaItemStateChanged(evt);
+            }
+        });
+
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel6.setText("Fecha:");
 
-        cmbhora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00", " " }));
+        cmbhora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00", " "}));
 
         txtlugarDestino.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         txtLugarDePartida.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
+        jLabel7.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jLabel7.setText("Bus:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
-                        .addComponent(btnCancelar)
-                        .addGap(62, 62, 62)
-                        .addComponent(btnGuardar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(133, 133, 133)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtLugarDePartida, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel5))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(27, 27, 27)
-                                        .addComponent(cmbCooperativa, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(layout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(txtlugarDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                            .addGap(26, 26, 26)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(cmbhora, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))))))))
-                .addContainerGap(74, Short.MAX_VALUE))
+                                                .addGap(105, 105, 105)
+                                                .addComponent(btnCancelar)
+                                                .addGap(62, 62, 62)
+                                                .addComponent(btnGuardar))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(133, 133, 133)
+                                                .addComponent(jLabel1))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(37, 37, 37)
+                                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(txtLugarDePartida, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(37, 37, 37)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel4)
+                                                        .addComponent(jLabel6)
+                                                        .addComponent(jLabel5)
+                                                        .addComponent(jLabel2)
+                                                        .addComponent(jLabel7))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                .addGroup(layout.createSequentialGroup()
+                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                        .addComponent(txtlugarDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                                        .addGap(26, 26, 26)
+                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addComponent(jcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(cmbhora, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(27, 27, 27)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(cmbBuses, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(cmbCooperativa, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addContainerGap(74, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jLabel1)
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(cmbCooperativa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtLugarDePartida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtlugarDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbhora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnGuardar))
-                .addGap(69, 69, 69))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(jLabel1)
+                                .addGap(30, 30, 30)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel2)
+                                        .addComponent(cmbCooperativa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(cmbBuses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel7))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel3)
+                                        .addComponent(txtLugarDePartida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(25, 25, 25)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel4)
+                                        .addComponent(txtlugarDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(27, 27, 27)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cmbhora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btnCancelar)
+                                        .addComponent(btnGuardar))
+                                .addGap(69, 69, 69))
         );
 
         pack();
@@ -180,9 +200,10 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
         String lugarPartida = txtLugarDePartida.getText();
         String destino = txtlugarDestino.getText();
         long date = jcFecha.getDate().getTime();
+        String bus = (String) cmbBuses.getSelectedItem();
         String hora = (String) cmbhora.getSelectedItem();
-        if(Validaciones.validarStrings(cooperativa,lugarPartida,destino,hora) && date > 1L){
-            ViajesManager.getInstance().insertViaje(cooperativa, lugarPartida, destino, date, hora, new SingleCallBack() {
+        if (Validaciones.validarStrings(cooperativa, lugarPartida, destino, hora, bus) && date > 1L) {
+            ViajesManager.getInstance().insertViaje(cooperativa, bus, lugarPartida, destino, date, hora, new SingleCallBack() {
                 @Override
                 public void onSucces(String msg) {
                     JOptionPane.showMessageDialog(null, msg);
@@ -198,6 +219,20 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "¡Complete los campos!");
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void cmbCooperativaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbCooperativaItemStateChanged
+        // TODO add your handling code here:
+        cmbBuses.removeAllItems();
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            String itemselected = ((String) evt.getItem()).trim();
+            if (Validaciones.validarStrings(itemselected) && !selectedItem.equals(itemselected)) {
+                for (String item : BusesManager.getInstance().getBusPorCooperativa(itemselected)) {
+                    cmbBuses.addItem(item);
+                }
+            }
+        }
+
+    }//GEN-LAST:event_cmbCooperativaItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -205,7 +240,7 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -242,6 +277,7 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JComboBox<String> cmbBuses;
     private javax.swing.JComboBox<String> cmbCooperativa;
     private javax.swing.JComboBox<String> cmbhora;
     private javax.swing.JLabel jLabel1;
@@ -250,6 +286,7 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private com.toedter.calendar.JDateChooser jcFecha;
     private javax.swing.JTextField txtLugarDePartida;
     private javax.swing.JTextField txtlugarDestino;

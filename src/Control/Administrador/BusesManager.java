@@ -30,6 +30,12 @@ public class BusesManager {
         return list;
     }
 
+    public ArrayList<String> getBusPorCooperativa(String cooperativa){
+        ArrayList<String> list = DataBaseManager.getInstance().getBusesPorCoop(cooperativa);
+
+        return list;
+    }
+
     public void agregarBusAfiliado(String placa, int asientos, String cooperativa, SingleCallBack callBack) {
         int idCooperativa = getIdByName(cooperativa);
         if (idCooperativa == 0) {

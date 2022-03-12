@@ -10,14 +10,24 @@ public class AdminViajes {
     private Date fecha;
     private String hora;
     private String nombreCooperativa;
+    private String bus;
 
-    public AdminViajes(int id_viaje, String destino, String partida, Date fecha, String hora, String nombreCooperativa) {
+    public AdminViajes(int id_viaje, String destino, String partida, Date fecha, String hora, String nombreCooperativa, String bus) {
         this.id_viaje = id_viaje;
         this.destino = destino;
         this.partida = partida;
         this.fecha = fecha;
         this.hora = hora;
         this.nombreCooperativa = nombreCooperativa;
+        this.bus = bus;
+    }
+
+    public String getBus() {
+        return bus;
+    }
+
+    public void setBus(String bus) {
+        this.bus = bus;
     }
 
     public int getId_viaje() {

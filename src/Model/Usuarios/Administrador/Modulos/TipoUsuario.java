@@ -21,4 +21,13 @@ public enum TipoUsuario {
         }
         return null;
     }
+
+    public static int getValueInt(String index) {
+        for (TipoUsuario member : TipoUsuario.values()) {
+            if (member.name().equalsIgnoreCase(index)) {
+                return member.ordinal() + 1;
+            }
+        }
+        return 0;
+    }
 }
