@@ -28,6 +28,7 @@ public class FrmActualizarBusAfiliado extends javax.swing.JFrame {
         initComponents();
         this.adminBuses = adminBuses;
         addValuesOnField();
+        (( JSpinner.DefaultEditor )Nasientos.getEditor()).getTextField().setEditable(false);
     }
 
     /**
@@ -75,11 +76,27 @@ public class FrmActualizarBusAfiliado extends javax.swing.JFrame {
 
         btnCancelar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel5.setText("Cooperativa:");
 
         Nasientos.setModel(new javax.swing.SpinnerNumberModel(1, 1, 60, 1));
+        Nasientos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                NasientosKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                NasientosKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                NasientosKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -111,8 +128,8 @@ public class FrmActualizarBusAfiliado extends javax.swing.JFrame {
                                 .addGap(30, 30, 30)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Nasientos, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbCooperativa, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cmbCooperativa, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Nasientos, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -179,6 +196,32 @@ public class FrmActualizarBusAfiliado extends javax.swing.JFrame {
         }
         JOptionPane.showMessageDialog(null, "¡Rellene los campos faltantes!");
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void NasientosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NasientosKeyTyped
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_NasientosKeyTyped
+
+    private void NasientosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NasientosKeyReleased
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        System.out.println("c");
+        if(!Character.isDigit(valida)){
+            getToolkit().beep();
+            System.out.println("c");
+            evt.consume();
+        }
+    }//GEN-LAST:event_NasientosKeyReleased
+
+    private void NasientosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NasientosKeyPressed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_NasientosKeyPressed
 
     /**
      * @param args the command line arguments

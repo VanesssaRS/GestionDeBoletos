@@ -15,6 +15,7 @@ import Model.Usuarios.Administrador.Modulos.AdminViajes;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -54,6 +55,8 @@ public class FrmViajes extends javax.swing.JFrame {
         btnAñadir = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        txtFiltro = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         btnMiPerfil = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
@@ -131,6 +134,15 @@ public class FrmViajes extends javax.swing.JFrame {
             }
         });
 
+        txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltroKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setText("Filtro:");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -150,7 +162,12 @@ public class FrmViajes extends javax.swing.JFrame {
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(299, 299, 299)
                                 .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 178, Short.MAX_VALUE)))
+                        .addGap(0, 178, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -158,9 +175,13 @@ public class FrmViajes extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(2, 2, 2)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -364,6 +385,17 @@ public class FrmViajes extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "¡Selecciona un viaje!");
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void txtFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyReleased
+        // TODO add your handling code here:
+        filtro(txtFiltro.getText(),tblViajes);
+    }//GEN-LAST:event_txtFiltroKeyReleased
+
+    private void filtro(String consulta, JTable jtableBuscar){
+        DefaultTableModel dm = (DefaultTableModel) jtableBuscar.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(dm);
+        jtableBuscar.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(consulta));
+    }
     public void insertDataInTable() {
         DefaultTableModel modelo = (DefaultTableModel) tblViajes.getModel();
         if (modelo != null) {
@@ -436,6 +468,7 @@ public class FrmViajes extends javax.swing.JFrame {
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnViajes;
     private javax.swing.JButton jButton12;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -447,5 +480,6 @@ public class FrmViajes extends javax.swing.JFrame {
     private javax.swing.JLabel lblInicio;
     private javax.swing.JLabel lblViajes;
     private javax.swing.JTable tblViajes;
+    private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 }
