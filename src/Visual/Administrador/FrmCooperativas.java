@@ -7,6 +7,7 @@ package Visual.Administrador;
 
 import Control.Administrador.CooperativasManager;
 import Control.SingleCallBack;
+import Control.Validaciones;
 import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
 
 import javax.swing.*;
@@ -85,7 +86,7 @@ public class FrmCooperativas extends javax.swing.JFrame {
         tblCooperativas.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         tblCooperativas.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
-                        {null, null, null, null}
+
                 },
                 new String[]{
                         "Codigo", "Nombre Coop.", "Buses Disponibles", "Cod. Provincia"
@@ -321,7 +322,16 @@ public class FrmCooperativas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAñadirMouseClicked
 
     private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
-        new FrmActualizarCooperativa().setVisible(true);
+        int rowSelected = tblCooperativas.getSelectedRow();
+        if (rowSelected >= 0) {
+            int codigo = (int) tblCooperativas.getModel().getValueAt(rowSelected, 0);
+            String nombre = (String) tblCooperativas.getModel().getValueAt(rowSelected, 1);
+            int numBuses = (int) tblCooperativas.getModel().getValueAt(rowSelected, 2);
+            String codigoProvincia = (String) tblCooperativas.getModel().getValueAt(rowSelected, 3);
+            if (Validaciones.validarStrings(nombre, codigoProvincia)) {
+                new FrmActualizarCooperativa(new AdminCooperativas(codigo, nombre, codigoProvincia, numBuses)).setVisible(true);
+            }
+        }
         ;
     }//GEN-LAST:event_btnActualizarMouseClicked
 
@@ -329,11 +339,11 @@ public class FrmCooperativas extends javax.swing.JFrame {
         // TODO add your handling code here:
         int rowSelectect = tblCooperativas.getSelectedRow();
         if (rowSelectect >= 0) {
-            int codigo = (int) tblCooperativas.getModel().getValueAt(rowSelectect,0);
+            int codigo = (int) tblCooperativas.getModel().getValueAt(rowSelectect, 0);
             CooperativasManager.getInstance().deleteCooperativa(codigo, new SingleCallBack() {
                 @Override
                 public void onSucces(String msg) {
-                    ((DefaultTableModel)tblCooperativas.getModel()).removeRow(rowSelectect);
+                    ((DefaultTableModel) tblCooperativas.getModel()).removeRow(rowSelectect);
                     JOptionPane.showMessageDialog(null, msg);
                 }
 
@@ -357,8 +367,9 @@ public class FrmCooperativas extends javax.swing.JFrame {
                 Object[] fila = new Object[4];
                 fila[0] = item.getId();
                 fila[1] = item.getNombreCooperativa();
-                fila[2] = item.getCodProvincia();
-                fila[3] = item.getNumBus();
+                fila[2] = item.getNumBus();
+                fila[3] = item.getCodProvincia();
+
                 modelo.addRow(fila);
                 tblCooperativas.setModel(modelo);
             }

@@ -10,6 +10,7 @@ import Control.Administrador.BusesManager;
 import Control.Administrador.CooperativasManager;
 import Control.SingleCallBack;
 import Control.Validaciones;
+import Model.Usuarios.Administrador.Modulos.AdminBuses;
 import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
 
 import javax.swing.*;
@@ -19,12 +20,14 @@ import javax.swing.*;
  */
 public class FrmActualizarBusAfiliado extends javax.swing.JFrame {
     //Funciona :D
+    private AdminBuses adminBuses;
     /**
      * Creates new form FrmAñadirCooperativa
      */
-    public FrmActualizarBusAfiliado() {
+    public FrmActualizarBusAfiliado(AdminBuses adminBuses) {
         initComponents();
-        insertDataCombo();
+        this.adminBuses = adminBuses;
+        addValuesOnField();
     }
 
     /**
@@ -34,134 +37,129 @@ public class FrmActualizarBusAfiliado extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    // Generated using JFormDesigner Evaluation license - unknown
     private void initComponents() {
-        txtPlaca = new JTextField();
-        jLabel1 = new JLabel();
-        jLabel2 = new JLabel();
-        jLabel3 = new JLabel();
-        jLabel4 = new JLabel();
-        txtIDBus = new JTextField();
-        btnGuardar = new JButton();
-        btnCancelar = new JButton();
-        jLabel5 = new JLabel();
-        cmbCooperativa = new JComboBox<>();
-        Nasientos = new JSpinner();
 
-        //======== this ========
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        txtPlaca = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        cmbCooperativa = new javax.swing.JComboBox<>();
+        Nasientos = new javax.swing.JSpinner();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Actualizar Bus Afiliado");
-        Container contentPane = getContentPane();
 
-        //---- jLabel1 ----
-        jLabel1.setText("Actualizar Bus Afiliado");
+        txtPlaca.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
-        //---- jLabel2 ----
-        jLabel2.setText("Codigo:");
+        jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel1.setText("Actualizar Bus");
 
-        //---- jLabel3 ----
-        jLabel3.setText("N\u00b0 Asientos:");
+        jLabel3.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jLabel3.setText("N° Asientos:");
 
-        //---- jLabel4 ----
+        jLabel4.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel4.setText("Placa:");
 
-        //---- btnGuardar ----
-        btnGuardar.setIcon(new ImageIcon(getClass().getResource("/Visual/img/guardaricon.png")));
+        btnGuardar.setBackground(java.awt.SystemColor.activeCaption);
+        btnGuardar.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Visual/img/guardaricon.png"))); // NOI18N
         btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(e -> btnGuardarActionPerformed(e));
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
-        //---- btnCancelar ----
+        btnCancelar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
 
-        //---- jLabel5 ----
+        jLabel5.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel5.setText("Cooperativa:");
 
-        //---- cmbCooperativa ----
-        cmbCooperativa.setModel(new DefaultComboBoxModel<>(new String[] {
+        Nasientos.setModel(new javax.swing.SpinnerNumberModel(1, 1, 60, 1));
 
-        }));
-
-        //---- Nasientos ----
-        Nasientos.setModel(new SpinnerNumberModel(1, 1, 60, 1));
-
-        GroupLayout contentPaneLayout = new GroupLayout(contentPane);
-        contentPane.setLayout(contentPaneLayout);
-        contentPaneLayout.setHorizontalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGroup(contentPaneLayout.createParallelGroup()
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(105, 105, 105)
-                            .addComponent(btnCancelar)
-                            .addGap(62, 62, 62)
-                            .addComponent(btnGuardar))
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(133, 133, 133)
-                            .addComponent(jLabel1)))
-                    .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addContainerGap(33, Short.MAX_VALUE)
-                    .addGroup(contentPaneLayout.createParallelGroup()
-                        .addGroup(contentPaneLayout.createParallelGroup()
-                            .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                                .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29))
-                            .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addGroup(contentPaneLayout.createParallelGroup()
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(61, Short.MAX_VALUE)
+                .addComponent(btnCancelar)
+                .addGap(62, 62, 62)
+                .addComponent(btnGuardar)
+                .addGap(85, 85, 85))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(127, 127, 127)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(29, 29, 29))
+                                .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel4)
-                                    .addComponent(jLabel2))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)))
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addGap(30, 30, 30)))
-                    .addGroup(contentPaneLayout.createParallelGroup()
-                        .addComponent(cmbCooperativa, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
-                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtIDBus, GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPlaca, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
-                        .addComponent(Nasientos, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
-                    .addGap(58, 58, 58))
+                                    .addGap(25, 25, 25)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(30, 30, 30)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Nasientos, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbCooperativa, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        contentPaneLayout.setVerticalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGap(28, 28, 28)
-                    .addComponent(jLabel1)
-                    .addGap(51, 51, 51)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(txtIDBus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGap(28, 28, 28)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(Nasientos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGap(23, 23, 23)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(txtPlaca, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGap(26, 26, 26)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5)
-                        .addComponent(cmbCooperativa, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnCancelar)
-                        .addComponent(btnGuardar))
-                    .addGap(69, 69, 69))
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jLabel1)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(Nasientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(cmbCooperativa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(58, 58, 58)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnGuardar))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
+
         pack();
-        setLocationRelativeTo(getOwner());
     }// </editor-fold>//GEN-END:initComponents
+    private void addValuesOnField(){
+        Nasientos.setValue(adminBuses.getNumeroAsientos());
+        txtPlaca.setText(adminBuses.getPlacaBus());
+        insertDataCombo();
+    }
 
     public void insertDataCombo(){
+        cmbCooperativa.addItem(adminBuses.getIdCooperativa());
         for (AdminCooperativas item: CooperativasManager.getInstance().getListCooperativas()){
+            if(item.getNombreCooperativa().equalsIgnoreCase(adminBuses.getIdCooperativa())){
+                continue;
+            }
             cmbCooperativa.addItem(item.getNombreCooperativa());
         }
     }
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        int codigo = Integer.parseInt(txtIDBus.getText());
+        int codigo = adminBuses.getId();
         int numAsientos = Integer.parseInt(Nasientos.getValue().toString());
         String placa = txtPlaca.getText();
         String coop = (String) cmbCooperativa.getSelectedItem();
@@ -178,7 +176,6 @@ public class FrmActualizarBusAfiliado extends javax.swing.JFrame {
                 }
             });
             return;
-
         }
         JOptionPane.showMessageDialog(null, "¡Rellene los campos faltantes!");
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -216,23 +213,20 @@ public class FrmActualizarBusAfiliado extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmActualizarBusAfiliado().setVisible(true);
+                new FrmActualizarBusAfiliado(null).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - unknown
-    private JTextField txtPlaca;
-    private JLabel jLabel1;
-    private JLabel jLabel2;
-    private JLabel jLabel3;
-    private JLabel jLabel4;
-    private JTextField txtIDBus;
-    private JButton btnGuardar;
-    private JButton btnCancelar;
-    private JLabel jLabel5;
-    private JComboBox<String> cmbCooperativa;
-    private JSpinner Nasientos;
+    private javax.swing.JSpinner Nasientos;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JComboBox<String> cmbCooperativa;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField txtPlaca;
     // End of variables declaration//GEN-END:variables
 }

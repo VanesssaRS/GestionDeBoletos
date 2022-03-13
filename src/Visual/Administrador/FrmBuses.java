@@ -8,6 +8,7 @@ package Visual.Administrador;
 import Control.Administrador.BusesManager;
 import Control.Administrador.CooperativasManager;
 import Control.SingleCallBack;
+import Control.Validaciones;
 import Model.Usuarios.Administrador.Modulos.AdminBuses;
 import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
 
@@ -89,7 +90,7 @@ public class FrmBuses extends javax.swing.JFrame {
         tblBuses.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         tblBuses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+
             },
             new String [] {
                 "Codigo", "Placa", "Num. Asientos", "Cooperativa"
@@ -331,8 +332,19 @@ public class FrmBuses extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAñadirMouseClicked
 
     private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
-        FrmActualizarBusAfiliado frmActualizarBusAfiliado= new FrmActualizarBusAfiliado();
-        frmActualizarBusAfiliado.setVisible(true);
+        int selectedRow = tblBuses.getSelectedRow();
+        if(selectedRow >=0){
+            int codigo = (int) tblBuses.getModel().getValueAt(selectedRow,0);
+            String bus = (String) tblBuses.getModel().getValueAt(selectedRow,1);
+            int numAsientos = (int) tblBuses.getModel().getValueAt(selectedRow,2);
+            String cooperativa = (String) tblBuses.getModel().getValueAt(selectedRow,3);
+            if(Validaciones.validarStrings(bus,cooperativa)){
+                new FrmActualizarBusAfiliado(new AdminBuses(codigo,bus,numAsientos,cooperativa)).setVisible(true);
+            }
+
+        }
+
+
     }//GEN-LAST:event_btnActualizarMouseClicked
 
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
@@ -347,7 +359,7 @@ public class FrmBuses extends javax.swing.JFrame {
             BusesManager.getInstance().deleteBus(codigo, new SingleCallBack() {
                 @Override
                 public void onSucces(String msg) {
-                    tblBuses.remove(selectRow);
+                    ((DefaultTableModel) tblBuses.getModel()).removeRow(selectRow);
                     JOptionPane.showMessageDialog(null, msg);
                 }
 

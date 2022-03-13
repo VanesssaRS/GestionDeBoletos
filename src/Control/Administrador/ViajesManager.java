@@ -8,6 +8,7 @@ import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
 import Model.Usuarios.Administrador.Modulos.AdminViajes;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class ViajesManager {
@@ -55,5 +56,14 @@ public class ViajesManager {
 
     public ArrayList<AdminViajes> getViajes() {
         return DataBaseManager.getInstance().getViajes();
+    }
+
+    public void actualizarViaje(int code, String cooperativa, String busplaca, String partida, String destino, Date fecha, String hora, SingleCallBack callBack){
+        String msg = DataBaseManager.getInstance().updateViajes(new AdminViajes(code,destino,partida,fecha,hora,cooperativa,busplaca));
+        if(Validaciones.validarStrings(msg)){
+            callBack.onSucces(msg);
+            return;
+        }
+        callBack.onFailed();
     }
 }

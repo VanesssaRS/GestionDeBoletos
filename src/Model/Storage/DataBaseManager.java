@@ -24,6 +24,31 @@ public class DataBaseManager {
         return dataBaseManager;
     }
 
+    public String updateViajes(AdminViajes viajes){
+        String sql = "{CALL actualizarViaje(?,?,?,?,?,?,?)}";
+        String msg = "";
+        try {
+            CallableStatement pp = database.open().prepareCall(sql);
+            pp.setInt(1, viajes.getId_viaje());
+            pp.setString(2, viajes.getNombreCooperativa());
+            pp.setString(3,viajes.getBus());
+            pp.setString(4,viajes.getPartida());
+            pp.setString(5, viajes.getDestino());
+            pp.setDate(6,new Date(viajes.getFecha().getTime()));
+            pp.setString(7,viajes.getHora());
+            ResultSet rs = pp.executeQuery();
+            while (rs.next()) {
+                msg = rs.getString("Mensaje");
+            }
+            pp.close();
+            return msg;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            database.close();
+            return null;
+        }
+    }
+
     public ArrayList<AdminViajes> getViajes() {
         ArrayList<AdminViajes> list = new ArrayList<>();
         try {
@@ -153,9 +178,9 @@ public class DataBaseManager {
         ArrayList<AdminBuses> list = new ArrayList<>();
         try {
             Statement statement = database.open().createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM buses");
+            ResultSet resultSet = statement.executeQuery("SELECT b.id, b.Placa,b.Num_Asientos, c.Nombre_Cooperativa FROM buses AS B inner join cooperativa c on B.id_cooperativa = c.id;");
             while (resultSet.next()) {
-                list.add(new AdminBuses(resultSet.getInt("id"), resultSet.getString("Placa"), resultSet.getInt("Num_Asientos"), resultSet.getInt("id_cooperativa")));
+                list.add(new AdminBuses(resultSet.getInt("id"), resultSet.getString("Placa"), resultSet.getInt("Num_Asientos"), resultSet.getString("Nombre_Cooperativa")));
             }
             return list;
         } catch (SQLException ex) {

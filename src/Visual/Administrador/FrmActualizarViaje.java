@@ -5,7 +5,17 @@
  */
 package Visual.Administrador;
 
+import Control.Administrador.BusesManager;
+import Control.Administrador.CooperativasManager;
+import Control.Administrador.ViajesManager;
+import Control.SingleCallBack;
+import Control.Validaciones;
+import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
 import Model.Usuarios.Administrador.Modulos.AdminViajes;
+
+import javax.swing.*;
+import java.awt.event.ItemEvent;
+import java.util.Date;
 
 /**
  *
@@ -13,12 +23,21 @@ import Model.Usuarios.Administrador.Modulos.AdminViajes;
  */
 public class FrmActualizarViaje extends javax.swing.JFrame {
     private AdminViajes adminViajes;
+    private String selectedItem = "";
     /**
      * Creates new form FrmAñadirCooperativa
      */
     public FrmActualizarViaje(AdminViajes viajes) {
         initComponents();
         this.adminViajes = viajes;
+        insertDataCombo();
+        addValuesOnField();
+    }
+
+    public void addValuesOnField(){
+        txtlugarDestino1.setText(adminViajes.getDestino());
+        txtlugarPartida.setText(adminViajes.getPartida());
+        dtcFecha.setDate(adminViajes.getFecha());
     }
 
     /**
@@ -81,6 +100,12 @@ public class FrmActualizarViaje extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel5.setText("Hora:");
+
+        cmbCooperativa.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbCooperativaItemStateChanged(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel6.setText("Fecha:");
@@ -176,9 +201,34 @@ public class FrmActualizarViaje extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    public void insertDataCombo() {
+        for (AdminCooperativas item : CooperativasManager.getInstance().getListCooperativas()) {
+            cmbCooperativa.addItem(item.getNombreCooperativa());
+        }
+    }
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        int code = adminViajes.getId_viaje();
+        String coopertiva = (String) cmbCooperativa.getSelectedItem();
+        String bus = (String) cmbBuses.getSelectedItem();
+        String partida = txtlugarPartida.getText();
+        String destino = txtlugarDestino1.getText();
+        Date fecha = dtcFecha.getDate();
+        String hora = (String) cmbhora.getSelectedItem();
+        if(Validaciones.validarStrings(coopertiva,bus,partida,destino,hora) && fecha != null){
+            ViajesManager.getInstance().actualizarViaje(code, coopertiva, bus, partida, destino, fecha, hora, new SingleCallBack() {
+                @Override
+                public void onSucces(String msg) {
+                    JOptionPane.showMessageDialog(null, msg);
+
+                }
+
+                @Override
+                public void onFailed() {
+                    JOptionPane.showMessageDialog(null, "¡No se ha podido actualizar los datos!");
+                }
+            });
+        }
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -186,6 +236,19 @@ public class FrmActualizarViaje extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void cmbCooperativaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbCooperativaItemStateChanged
+        // TODO add your handling code here:
+        cmbBuses.removeAllItems();
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            String itemselected = ((String) evt.getItem()).trim();
+            if (Validaciones.validarStrings(itemselected) && !selectedItem.equals(itemselected)) {
+                for (String item : BusesManager.getInstance().getBusPorCooperativa(itemselected)) {
+                    cmbBuses.addItem(item);
+                }
+            }
+        }
+    }//GEN-LAST:event_cmbCooperativaItemStateChanged
 
     /**
      * @param args the command line arguments

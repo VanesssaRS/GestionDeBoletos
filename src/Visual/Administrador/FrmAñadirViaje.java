@@ -30,7 +30,6 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
         insertDataCombo();
     }
 
-
     public void insertDataCombo() {
         for (AdminCooperativas item : CooperativasManager.getInstance().getListCooperativas()) {
             cmbCooperativa.addItem(item.getNombreCooperativa());
