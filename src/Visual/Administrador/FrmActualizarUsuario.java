@@ -30,6 +30,7 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
         initComponents();
         addValuesOnField();
         insertComboValue();
+        ((JTextField) jCalendarFechaNac.getDateEditor()).setEditable(false);
     }
 
     /**
@@ -115,19 +116,49 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
         jLabel9.setText("Telefono:");
 
         txtNombreActuallizarUsuario.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtNombreActuallizarUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreActuallizarUsuarioKeyTyped(evt);
+            }
+        });
 
         txtApellidoAU.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtApellidoAU.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoAUKeyTyped(evt);
+            }
+        });
 
         txtDirecciónAU.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtDirecciónAU.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDirecciónAUKeyTyped(evt);
+            }
+        });
 
         txtTelefono.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
 
         txtEmailAu.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtEmailAu.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEmailAuKeyTyped(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel12.setText("Tipo Usuario:");
 
         txtCedulaAU.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtCedulaAU.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCedulaAUKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -268,7 +299,10 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
         String tipouser = (String) cmbTipoUsuarioAU.getSelectedItem();
         System.out.println(tipouser);
         if (Validaciones.validarStrings(cedula, nombre, apellido, email, direccion, tipouser)) {
-
+            if (!Validaciones.isEmail(email)){
+                JOptionPane.showMessageDialog(null, "¡Ingrese un E-mail valido!");
+                return;
+            }
             UsuariosManager.getInstance().actualizarUsuario(codigo, cedula, nombre, apellido, email, telefono, date, direccion, tipouser, new SingleCallBack() {
                 @Override
                 public void onSucces(String msg) {
@@ -290,6 +324,51 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtCedulaAUKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaAUKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(!Character.isDigit(valida)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCedulaAUKeyTyped
+
+    private void txtApellidoAUKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoAUKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(!Character.isLetter(valida)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtApellidoAUKeyTyped
+
+    private void txtNombreActuallizarUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreActuallizarUsuarioKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(!Character.isLetter(valida)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreActuallizarUsuarioKeyTyped
+
+    private void txtEmailAuKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailAuKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailAuKeyTyped
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(!Character.isDigit(valida)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
+    private void txtDirecciónAUKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDirecciónAUKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(Character.isLetter(valida) || Character.isDigit(valida)){
+            return;
+        }
+        evt.consume();
+    }//GEN-LAST:event_txtDirecciónAUKeyTyped
 
     /**
      * @param args the command line arguments

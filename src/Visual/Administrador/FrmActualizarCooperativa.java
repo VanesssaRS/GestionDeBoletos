@@ -26,6 +26,7 @@ public class FrmActualizarCooperativa extends javax.swing.JFrame {
         initComponents();
         this.adminCooperativas = adminCooperativas;
         addValuestoField();
+        (( JSpinner.DefaultEditor )Nbuses.getEditor()).getTextField().setEditable(false);
     }
 
     /**
@@ -51,6 +52,11 @@ public class FrmActualizarCooperativa extends javax.swing.JFrame {
         setTitle("Actualizar Cooperativa");
 
         txtCod_Provincia.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtCod_Provincia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCod_ProvinciaKeyTyped(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel1.setText("Actualizar Cooperativa");
@@ -62,6 +68,11 @@ public class FrmActualizarCooperativa extends javax.swing.JFrame {
         jLabel4.setText("Cod. \nProvincia:");
 
         txtNombreCoop.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtNombreCoop.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreCoopKeyTyped(evt);
+            }
+        });
 
         btnGuardar.setBackground(java.awt.SystemColor.activeCaption);
         btnGuardar.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
@@ -75,6 +86,11 @@ public class FrmActualizarCooperativa extends javax.swing.JFrame {
 
         btnCancelar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         Nbuses.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
         Nbuses.setVerifyInputWhenFocusTarget(false);
@@ -175,6 +191,28 @@ public class FrmActualizarCooperativa extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Rellene los  formularios porfavor");
 
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtNombreCoopKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreCoopKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(!Character.isLetter(valida)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreCoopKeyTyped
+
+    private void txtCod_ProvinciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCod_ProvinciaKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(Character.isLetter(valida) || Character.isDigit(valida)){
+            return;
+        }
+        evt.consume();
+    }//GEN-LAST:event_txtCod_ProvinciaKeyTyped
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -36,8 +36,8 @@
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtPlaca" alignment="0" min="-2" pref="98" max="-2" attributes="0"/>
-                          <Component id="Nasientos" alignment="0" min="-2" pref="41" max="-2" attributes="0"/>
+                          <Component id="txtPlaca" min="-2" pref="98" max="-2" attributes="0"/>
+                          <Component id="Nasientos" min="-2" pref="89" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="200" max="-2" attributes="0"/>
                   </Group>

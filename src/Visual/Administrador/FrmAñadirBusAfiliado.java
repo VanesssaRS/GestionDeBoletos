@@ -26,6 +26,7 @@ public class FrmAñadirBusAfiliado extends javax.swing.JFrame {
     public FrmAñadirBusAfiliado() {
         initComponents();
         insertDataCombo();
+        (( JSpinner.DefaultEditor )Nasientos.getEditor()).getTextField().setEditable(false);
     }
 
     /**
@@ -95,7 +96,7 @@ public class FrmAñadirBusAfiliado extends javax.swing.JFrame {
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Nasientos, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Nasientos, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(200, 200, 200))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)

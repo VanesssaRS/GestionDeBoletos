@@ -32,6 +32,7 @@ public class FrmActualizarViaje extends javax.swing.JFrame {
         this.adminViajes = viajes;
         insertDataCombo();
         addValuesOnField();
+        ((JTextField) dtcFecha.getDateEditor()).setEditable(false);
     }
 
     public void addValuesOnField(){
@@ -113,8 +114,18 @@ public class FrmActualizarViaje extends javax.swing.JFrame {
         cmbhora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00", " " }));
 
         txtlugarPartida.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtlugarPartida.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtlugarPartidaKeyTyped(evt);
+            }
+        });
 
         txtlugarDestino1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtlugarDestino1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtlugarDestino1KeyTyped(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel7.setText("Bus:");
@@ -158,9 +169,11 @@ public class FrmActualizarViaje extends javax.swing.JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(26, 26, 26)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(dtcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(cmbhora, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtlugarDestino1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))))))))
+                                                .addComponent(txtlugarDestino1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(26, 26, 26)
+                                            .addComponent(dtcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
                 .addContainerGap(74, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -220,7 +233,6 @@ public class FrmActualizarViaje extends javax.swing.JFrame {
                 @Override
                 public void onSucces(String msg) {
                     JOptionPane.showMessageDialog(null, msg);
-
                 }
 
                 @Override
@@ -249,6 +261,24 @@ public class FrmActualizarViaje extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_cmbCooperativaItemStateChanged
+
+    private void txtlugarPartidaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtlugarPartidaKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(Character.isLetter(valida) || Character.isDigit(valida)){
+            return;
+        }
+        evt.consume();
+    }//GEN-LAST:event_txtlugarPartidaKeyTyped
+
+    private void txtlugarDestino1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtlugarDestino1KeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(Character.isLetter(valida) || Character.isDigit(valida)){
+            return;
+        }
+        evt.consume();
+    }//GEN-LAST:event_txtlugarDestino1KeyTyped
 
     /**
      * @param args the command line arguments
