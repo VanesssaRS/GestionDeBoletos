@@ -48,7 +48,7 @@ public class FrmAñadirBusAfiliado extends javax.swing.JFrame {
         cmbCooperativa = new javax.swing.JComboBox<>();
         Nasientos = new javax.swing.JSpinner();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Añadir Bus Afiliado");
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
@@ -74,6 +74,11 @@ public class FrmAñadirBusAfiliado extends javax.swing.JFrame {
 
         btnCancelar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel5.setText("Cooperativa:");
@@ -160,6 +165,11 @@ public class FrmAñadirBusAfiliado extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "¡Complete los datos!");
 
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
 
     public void insertDataCombo(){

@@ -24,6 +24,7 @@ import java.util.Date;
 public class FrmAñadirViaje extends javax.swing.JFrame {
     //Funciona :D
     private String selectedItem = "";
+
     /**
      * Creates new form FrmAñadirCooperativa
      */
@@ -63,21 +64,29 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
         jcFecha = new com.toedter.calendar.JDateChooser();
         cmbBuses = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtValor = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Añadir Viaje");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel1.setText("Añadir Viaje");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(133, 28, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel2.setText("Cooperativa:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 81, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel3.setText("Lugar de partida:");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 170, 146, -1));
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel4.setText("Lugar de destino:");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 219, -1, -1));
 
         btnGuardar.setBackground(java.awt.SystemColor.activeCaption);
         btnGuardar.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
@@ -88,23 +97,29 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(247, 402, -1, -1));
 
         btnCancelar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(116, 402, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel5.setText("Hora:");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 305, -1, 21));
 
         cmbCooperativa.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbCooperativaItemStateChanged(evt);
             }
         });
+        getContentPane().add(cmbCooperativa, new org.netbeans.lib.awtextra.AbsoluteConstraints(201, 82, 186, -1));
 
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel6.setText("Fecha:");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 267, -1, -1));
 
-        cmbhora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00", " " }));
+        cmbhora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00", " "}));
+        getContentPane().add(cmbhora, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 305, 146, -1));
 
         txtlugarDestino.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         txtlugarDestino.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -112,6 +127,7 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
                 txtlugarDestinoKeyTyped(evt);
             }
         });
+        getContentPane().add(txtlugarDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(201, 216, 145, -1));
 
         txtLugarDePartida.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         txtLugarDePartida.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -119,90 +135,30 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
                 txtLugarDePartidaKeyTyped(evt);
             }
         });
+        getContentPane().add(txtLugarDePartida, new org.netbeans.lib.awtextra.AbsoluteConstraints(201, 167, 145, -1));
+        getContentPane().add(jcFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 267, 187, -1));
+
+        getContentPane().add(cmbBuses, new org.netbeans.lib.awtextra.AbsoluteConstraints(201, 121, 186, -1));
 
         jLabel7.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel7.setText("Bus:");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 120, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
-                        .addComponent(btnCancelar)
-                        .addGap(62, 62, 62)
-                        .addComponent(btnGuardar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(133, 133, 133)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtLugarDePartida, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel7))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtlugarDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGap(26, 26, 26)
-                                    .addComponent(cmbhora, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmbBuses, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbCooperativa, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(74, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jLabel1)
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(cmbCooperativa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbBuses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtLugarDePartida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtlugarDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbhora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnGuardar))
-                .addGap(69, 69, 69))
-        );
+        jLabel8.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jLabel8.setText("Valor:");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 350, -1, -1));
+
+        txtValor.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtValor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtValorKeyTyped(evt);
+            }
+        });
+        getContentPane().add(txtValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 344, 80, -1));
+
+        jLabel9.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jLabel9.setText("$");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 350, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -215,8 +171,9 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
         long date = jcFecha.getDate().getTime();
         String bus = (String) cmbBuses.getSelectedItem();
         String hora = (String) cmbhora.getSelectedItem();
-        if (Validaciones.validarStrings(cooperativa, lugarPartida, destino, hora, bus) && date > 1L) {
-            ViajesManager.getInstance().insertViaje(cooperativa, bus, lugarPartida, destino, date, hora, new SingleCallBack() {
+        double valor = Double.parseDouble(txtValor.getText());
+        if (Validaciones.validarStrings(cooperativa, lugarPartida, destino, hora, bus) && date > 1L && valor > 0) {
+            ViajesManager.getInstance().insertViaje(cooperativa, bus, lugarPartida, destino, date, hora, valor, new SingleCallBack() {
                 @Override
                 public void onSucces(String msg) {
                     JOptionPane.showMessageDialog(null, msg);
@@ -248,9 +205,8 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
 
     private void txtLugarDePartidaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLugarDePartidaKeyTyped
         // TODO add your handling code here:
-
         char valida = evt.getKeyChar();
-        if(!Character.isLetter(valida) && valida != KeyEvent.VK_SPACE){
+        if (!Character.isLetter(valida) && valida != KeyEvent.VK_SPACE) {
             evt.consume();
         }
     }//GEN-LAST:event_txtLugarDePartidaKeyTyped
@@ -258,11 +214,19 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
     private void txtlugarDestinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtlugarDestinoKeyTyped
         // TODO add your handling code here:
         char valida = evt.getKeyChar();
-
-        if(!Character.isLetter(valida)){
+        if (!Character.isLetter(valida)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtlugarDestinoKeyTyped
+
+    private void txtValorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+
+        if (!Character.isDigit(valida)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtValorKeyTyped
 
     /**
      * @param args the command line arguments
@@ -293,10 +257,6 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-
-
-
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -318,8 +278,11 @@ public class FrmAñadirViaje extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private com.toedter.calendar.JDateChooser jcFecha;
     private javax.swing.JTextField txtLugarDePartida;
+    private javax.swing.JTextField txtValor;
     private javax.swing.JTextField txtlugarDestino;
     // End of variables declaration//GEN-END:variables
 }

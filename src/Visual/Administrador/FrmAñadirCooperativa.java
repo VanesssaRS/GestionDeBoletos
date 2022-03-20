@@ -213,7 +213,7 @@ public class FrmAñadirCooperativa extends javax.swing.JFrame {
         String nombre = txtNombreCooperativa1.getText();
         String codProvincia = txtCod_Provincia.getText();
         int numBuses = Integer.parseInt(Nbuses.getValue().toString());
-        if (Validaciones.validarStrings(nombre, codProvincia) && numBuses > 30) {
+        if (Validaciones.validarStrings(nombre, codProvincia) && numBuses > 0) {
             CooperativasManager.getInstance().agregarDatos(nombre, codProvincia, numBuses, new SingleCallBack() {
                 @Override
                 public void onSucces(String msg) {

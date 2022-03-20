@@ -62,7 +62,9 @@ public class DataBaseManager {
                         resultSet.getString("Partida"),
                         new java.util.Date(resultSet.getDate("Fecha").getTime()),
                         resultSet.getString("Hora"),
-                        resultSet.getString("Nombre_Cooperativa"), resultSet.getString("Placa")));
+                        resultSet.getString("Nombre_Cooperativa"),
+                        resultSet.getString("Placa"),
+                        resultSet.getDouble("valor")));
             }
             resultSet.close();
             return list;
@@ -339,8 +341,8 @@ public class DataBaseManager {
         return list;
     }
 
-    public String insertViajes(int cooperativa, String bus, String lugarpartida, String destino, long date, String hora) {
-        String sql = "{CALL crearViaje(?,?,?,?,?,?)}";
+    public String insertViajes(int cooperativa, String bus, String lugarpartida, String destino, long date, String hora,double valor) {
+        String sql = "{CALL crearViaje(?,?,?,?,?,?,?)}";
         String msg = "";
         try {
             CallableStatement pp = database.open().prepareCall(sql);
@@ -350,6 +352,7 @@ public class DataBaseManager {
             pp.setString(4, lugarpartida);
             pp.setDate(5, new Date(date));
             pp.setString(6, hora);
+            pp.setDouble(7,valor);
             ResultSet rs = pp.executeQuery();
             while (rs.next()) {
                 msg = rs.getString("Mensaje");

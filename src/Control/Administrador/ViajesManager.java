@@ -32,13 +32,13 @@ public class ViajesManager {
      * @param hora Hora del viaje
      * @param callBack Informa si hubo fallo o no en el inserccion del documento
      */
-    public void insertViaje(String cooperativa, String bus, String lugarpartida, String destino, long date , String hora, SingleCallBack callBack){
+    public void insertViaje(String cooperativa, String bus, String lugarpartida, String destino, long date , String hora, double valor, SingleCallBack callBack){
         int idCooperativa = Utils.getIdCooperativa(cooperativa);
         if (idCooperativa == 0) {
             callBack.onFailed();
             return;
         }
-        String msg = DataBaseManager.getInstance().insertViajes(idCooperativa, bus, lugarpartida, destino, date, hora);
+        String msg = DataBaseManager.getInstance().insertViajes(idCooperativa, bus, lugarpartida, destino, date, hora, valor);
         if(Validaciones.validarStrings(msg)){
             callBack.onSucces(msg);
             return;
@@ -58,8 +58,8 @@ public class ViajesManager {
         return DataBaseManager.getInstance().getViajes();
     }
 
-    public void actualizarViaje(int code, String cooperativa, String busplaca, String partida, String destino, Date fecha, String hora, SingleCallBack callBack){
-        String msg = DataBaseManager.getInstance().updateViajes(new AdminViajes(code,destino,partida,fecha,hora,cooperativa,busplaca));
+    public void actualizarViaje(int code, String cooperativa, String busplaca, String partida, String destino, Date fecha, String hora, double valor, SingleCallBack callBack){
+        String msg = DataBaseManager.getInstance().updateViajes(new AdminViajes(code,destino,partida,fecha,hora,cooperativa,busplaca,valor));
         if(Validaciones.validarStrings(msg)){
             callBack.onSucces(msg);
             return;

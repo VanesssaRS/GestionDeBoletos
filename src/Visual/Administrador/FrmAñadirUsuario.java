@@ -60,7 +60,7 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
         cmbTipoUsuario = new javax.swing.JComboBox<>();
         dtcFechaNacimiento = new com.toedter.calendar.JDateChooser();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Añadir Usuario");
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N

@@ -11,8 +11,9 @@ public class AdminViajes {
     private String hora;
     private String nombreCooperativa;
     private String bus;
+    private double valor;
 
-    public AdminViajes(int id_viaje, String destino, String partida, Date fecha, String hora, String nombreCooperativa, String bus) {
+    public AdminViajes(int id_viaje, String destino, String partida, Date fecha, String hora, String nombreCooperativa, String bus, double valor) {
         this.id_viaje = id_viaje;
         this.destino = destino;
         this.partida = partida;
@@ -20,6 +21,42 @@ public class AdminViajes {
         this.hora = hora;
         this.nombreCooperativa = nombreCooperativa;
         this.bus = bus;
+        this.valor = valor;
+    }
+
+    public AdminViajes() {
+    }
+
+    public void setId_viaje(int id_viaje) {
+        this.id_viaje = id_viaje;
+    }
+
+    public void setDestino(String destino) {
+        this.destino = destino;
+    }
+
+    public void setPartida(String partida) {
+        this.partida = partida;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public void setNombreCooperativa(String nombreCooperativa) {
+        this.nombreCooperativa = nombreCooperativa;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public double getValor() {
+        return valor;
     }
 
     public String getBus() {

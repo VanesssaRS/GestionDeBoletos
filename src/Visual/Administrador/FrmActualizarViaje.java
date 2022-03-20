@@ -65,6 +65,9 @@ public class FrmActualizarViaje extends javax.swing.JFrame {
         txtlugarDestino1 = new javax.swing.JTextField();
         cmbBuses = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtValor = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Actualizar Viaje");
@@ -130,6 +133,19 @@ public class FrmActualizarViaje extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel7.setText("Bus:");
 
+        jLabel8.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jLabel8.setText("Valor:");
+
+        txtValor.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtValor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtValorKeyTyped(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jLabel9.setText("$");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -173,7 +189,13 @@ public class FrmActualizarViaje extends javax.swing.JFrame {
                                                 .addComponent(txtlugarDestino1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(26, 26, 26)
-                                            .addComponent(dtcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                                            .addComponent(dtcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel8)
+                                    .addGap(110, 110, 110)
+                                    .addComponent(jLabel9)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(74, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -185,7 +207,7 @@ public class FrmActualizarViaje extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cmbCooperativa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbBuses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
@@ -206,10 +228,18 @@ public class FrmActualizarViaje extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbhora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))))
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnGuardar))
-                .addGap(69, 69, 69))
+                .addGap(26, 26, 26))
         );
 
         pack();
@@ -228,8 +258,9 @@ public class FrmActualizarViaje extends javax.swing.JFrame {
         String destino = txtlugarDestino1.getText();
         Date fecha = dtcFecha.getDate();
         String hora = (String) cmbhora.getSelectedItem();
-        if(Validaciones.validarStrings(coopertiva,bus,partida,destino,hora) && fecha != null){
-            ViajesManager.getInstance().actualizarViaje(code, coopertiva, bus, partida, destino, fecha, hora, new SingleCallBack() {
+        double valor = Double.parseDouble(txtValor.getText());
+        if(Validaciones.validarStrings(coopertiva,bus,partida,destino,hora) && fecha != null && valor > 0){
+            ViajesManager.getInstance().actualizarViaje(code, coopertiva, bus, partida, destino, fecha, hora,valor, new SingleCallBack() {
                 @Override
                 public void onSucces(String msg) {
                     JOptionPane.showMessageDialog(null, msg);
@@ -279,6 +310,15 @@ public class FrmActualizarViaje extends javax.swing.JFrame {
         }
         evt.consume();
     }//GEN-LAST:event_txtlugarDestino1KeyTyped
+
+    private void txtValorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+
+        if (!Character.isDigit(valida)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtValorKeyTyped
 
     /**
      * @param args the command line arguments
@@ -339,6 +379,9 @@ public class FrmActualizarViaje extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JTextField txtValor;
     private javax.swing.JTextField txtlugarDestino1;
     private javax.swing.JTextField txtlugarPartida;
     // End of variables declaration//GEN-END:variables
