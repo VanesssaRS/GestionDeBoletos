@@ -1,18 +1,16 @@
 package Model.Storage;
 
-import Model.Usuarios.Administrador.Modulos.AdminViajes;
-
 import java.sql.*;
 
 
-public class SQLite {
-    private static SQLite instance;
+public class MySQL {
+    private static MySQL instance;
     private Connection connection;
 
 
-    public static SQLite getInstance(){
+    public static MySQL getInstance(){
         if(instance == null){
-            instance = new SQLite();
+            instance = new MySQL();
         }
         return instance;
     }

@@ -149,6 +149,10 @@ public class FrmAñadirBusAfiliado extends javax.swing.JFrame {
         int numAsientos = Integer.parseInt(Nasientos.getValue().toString());
         String cooperativa =(String) cmbCooperativa.getSelectedItem();
         if(Validaciones.validarStrings(placa,cooperativa)){
+            if(numAsientos > 25){
+                JOptionPane.showMessageDialog(null, "El maximo de asiento es de 25");
+                return;
+            }
             BusesManager.getInstance().agregarBusAfiliado(placa, numAsientos, cooperativa, new SingleCallBack() {
                 @Override
                 public void onSucces(String msg) {

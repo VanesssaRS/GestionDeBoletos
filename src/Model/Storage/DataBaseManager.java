@@ -1,18 +1,14 @@
 package Model.Storage;
 
 import Model.Usuarios.Administrador.Modulos.*;
+import Model.Usuarios.Monto;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DataBaseManager {
     private static DataBaseManager dataBaseManager;
-    private SQLite database = SQLite.getInstance();
+    private MySQL database = MySQL.getInstance();
 
     public DataBaseManager() {
     }
@@ -24,18 +20,18 @@ public class DataBaseManager {
         return dataBaseManager;
     }
 
-    public String updateViajes(AdminViajes viajes){
+    public String updateViajes(AdminViajes viajes) {
         String sql = "{CALL actualizarViaje(?,?,?,?,?,?,?)}";
         String msg = "";
         try {
             CallableStatement pp = database.open().prepareCall(sql);
             pp.setInt(1, viajes.getId_viaje());
             pp.setString(2, viajes.getNombreCooperativa());
-            pp.setString(3,viajes.getBus());
-            pp.setString(4,viajes.getPartida());
+            pp.setString(3, viajes.getBus());
+            pp.setString(4, viajes.getPartida());
             pp.setString(5, viajes.getDestino());
-            pp.setDate(6,new Date(viajes.getFecha().getTime()));
-            pp.setString(7,viajes.getHora());
+            pp.setDate(6, new Date(viajes.getFecha().getTime()));
+            pp.setString(7, viajes.getHora());
             ResultSet rs = pp.executeQuery();
             while (rs.next()) {
                 msg = rs.getString("Mensaje");
@@ -48,6 +44,7 @@ public class DataBaseManager {
             return null;
         }
     }
+
 
     public ArrayList<AdminViajes> getViajes() {
         ArrayList<AdminViajes> list = new ArrayList<>();
@@ -109,6 +106,75 @@ public class DataBaseManager {
             while (rs.next()) {
                 msg = rs.getString("Mensaje");
             }
+            pp.close();
+            return msg;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public String insertBoleto(Monto monto, AdminViajes adminViajes, int numAsientos, int metodoPago, String asientos) {
+        String sql = "{CALL crearBoleto(?,?,?,?,?,?,?,?)}";
+        String msg = "";
+        try {
+            CallableStatement pp = database.open().prepareCall(sql);
+            pp.setString(1, adminViajes.getNombreCooperativa());
+            pp.setString(2, adminViajes.getPartida());
+            pp.setString(3, adminViajes.getDestino());
+            pp.setString(4, adminViajes.getHora());
+            pp.setInt(5, numAsientos);
+            pp.setInt(6, metodoPago);
+            pp.setDouble(7, monto.getTotal());
+            pp.setString(8, asientos);
+            ResultSet rs = pp.executeQuery();
+            while (rs.next()) {
+                msg = rs.getString("Mensaje");
+            }
+            pp.close();
+            return msg;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public String insertBoletoSinRegistro(String cedula, String Nombre, String apellido, Monto monto, AdminViajes adminViajes, int numAsientos, int metodoPago, String asientos) {
+        String sql = "{CALL crearBoletoSinRegistro(?,?,?,?,?,?,?,?,?,?,?)}";
+        String msg = "";
+        try {
+            CallableStatement pp = database.open().prepareCall(sql);
+            pp.setString(1, cedula);
+            pp.setString(2, Nombre);
+            pp.setString(3, apellido);
+            pp.setString(4, adminViajes.getNombreCooperativa());
+            pp.setString(5, adminViajes.getPartida());
+            pp.setString(6, adminViajes.getDestino());
+            pp.setString(7, adminViajes.getHora());
+            pp.setInt(8, numAsientos);
+            pp.setInt(9, metodoPago);
+            pp.setDouble(10, monto.getTotal());
+            pp.setString(11, asientos);
+            ResultSet rs = pp.executeQuery();
+            while (rs.next()) {
+                msg = rs.getString("Mensaje");
+            }
+            pp.close();
+            return msg;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public String insertAsientosBuses(String bus, String asiento) {
+        String sql = "{CALL agregarAsientos(?,?)}";
+        String msg = "";
+        try {
+            CallableStatement pp = database.open().prepareCall(sql);
+            pp.setString(1, asiento);
+            pp.setString(2, bus);
+            pp.executeQuery();
             pp.close();
             return msg;
         } catch (SQLException ex) {
@@ -341,7 +407,50 @@ public class DataBaseManager {
         return list;
     }
 
-    public String insertViajes(int cooperativa, String bus, String lugarpartida, String destino, long date, String hora,double valor) {
+    public AdminUsuarios getUsuario(String cedula) {
+        try {
+            Statement statement = database.open().createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM persona where Cedula = '" + cedula + "'");
+            while (resultSet.next()) {
+                return new AdminUsuarios(
+                        resultSet.getInt("id_persona"),
+                        resultSet.getString("Nombre"),
+                        resultSet.getString("Cedula"),
+                        resultSet.getString("Email"),
+                        resultSet.getString("Telefono"),
+                        new java.util.Date(resultSet.getDate("FechaNacimiento").getTime()),
+                        resultSet.getString("Direccion"),
+                        TipoUsuario.getOrdinal(resultSet.getInt("id_tipoUser")),
+                        resultSet.getString("Apellido"));
+            }
+            resultSet.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        database.close();
+        return null;
+    }
+
+
+    public ArrayList<String> getAsientos(String bus) {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            Statement statement = database.open().createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT asiento FROM asientosbuses where placaBus = '" + bus + "'");
+            while (resultSet.next()) {
+                list.add(resultSet.getString("asiento"));
+            }
+            resultSet.close();
+            return list;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        database.close();
+        return list;
+    }
+
+    public String insertViajes(int cooperativa, String bus, String lugarpartida, String destino, long date, String hora, double valor) {
         String sql = "{CALL crearViaje(?,?,?,?,?,?,?)}";
         String msg = "";
         try {
@@ -352,7 +461,7 @@ public class DataBaseManager {
             pp.setString(4, lugarpartida);
             pp.setDate(5, new Date(date));
             pp.setString(6, hora);
-            pp.setDouble(7,valor);
+            pp.setDouble(7, valor);
             ResultSet rs = pp.executeQuery();
             while (rs.next()) {
                 msg = rs.getString("Mensaje");

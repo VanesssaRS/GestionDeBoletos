@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Visual.Pasajero;
+package Visual.Vendedor;
 
 import Control.Administrador.ViajesManager;
 import Model.Usuarios.Administrador.Modulos.AdminViajes;
@@ -18,12 +18,12 @@ import java.util.Date;
  *
  * @author NexBorn
  */
-public class FrmMostrarViajes extends javax.swing.JFrame {
+public class FrmVMostrarViajes extends javax.swing.JFrame {
     private AdminViajes copyViaje;
     /**
      * Creates new form FrmMostrarViajes
      */
-    public FrmMostrarViajes(AdminViajes adminViajes) {
+    public FrmVMostrarViajes(AdminViajes adminViajes) {
         initComponents();
         insertDataInTable();
         copyViaje = adminViajes;
@@ -175,13 +175,13 @@ public class FrmMostrarViajes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmMostrarViajes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmVMostrarViajes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmMostrarViajes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmVMostrarViajes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmMostrarViajes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmVMostrarViajes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmMostrarViajes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmVMostrarViajes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -189,7 +189,7 @@ public class FrmMostrarViajes extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmMostrarViajes(null).setVisible(true);
+                new FrmVMostrarViajes(null).setVisible(true);
             }
         });
     }

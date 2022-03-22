@@ -5,7 +5,7 @@
  */
 package Visual.Pasajero;
 
-import Visual.Pasajero.JComprarBoleto;
+import Visual.Vendedor.JVComprarBoleto;
 import java.awt.BorderLayout;
 
 /**
@@ -42,7 +42,6 @@ public class FrmPDashBoard extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(980, 559));
-        setPreferredSize(new java.awt.Dimension(1056, 600));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
@@ -167,6 +166,8 @@ public class FrmPDashBoard extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrmPDashBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

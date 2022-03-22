@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Visual.Pasajero;
+package Visual.Vendedor;
 
 import Control.Pasajero.ComprarBoletoManager;
 
@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * @author NexBorn
  */
-public class FrmAsientos extends javax.swing.JFrame {
+public class FrmVAsiento extends javax.swing.JFrame {
     String bus;
     int numAsientos;
     Set<String> seats = ComprarBoletoManager.getInstace().getAsientos();
@@ -26,7 +26,7 @@ public class FrmAsientos extends javax.swing.JFrame {
     /**
      * Creates new form FrmAsientos
      */
-    public FrmAsientos(String bus, int numAsientos) {
+    public FrmVAsiento(String bus, int numAsientos) {
         initComponents();
         this.bus = bus;
         this.numAsientos = numAsientos;
@@ -333,13 +333,13 @@ public class FrmAsientos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAsientos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmVAsiento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAsientos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmVAsiento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAsientos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmVAsiento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAsientos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmVAsiento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -347,7 +347,7 @@ public class FrmAsientos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmAsientos(null, 0).setVisible(true);
+                new FrmVAsiento(null, 0).setVisible(true);
             }
         });
     }
