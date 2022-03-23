@@ -1,4 +1,6 @@
-package Model.Usuarios.Administrador.Modulos;
+package Model.Modulos;
+
+import Model.Usuarios.TipoUsuario;
 
 import java.util.Date;
 

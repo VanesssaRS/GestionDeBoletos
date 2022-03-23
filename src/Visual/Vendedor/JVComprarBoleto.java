@@ -9,8 +9,8 @@ import Control.GenericCallBack;
 import Control.Pasajero.ComprarBoletoManager;
 import Control.SingleCallBack;
 import Control.Validaciones;
-import Model.Usuarios.Administrador.Modulos.AdminUsuarios;
-import Model.Usuarios.Administrador.Modulos.AdminViajes;
+import Model.Modulos.AdminUsuarios;
+import Model.Modulos.AdminViajes;
 import Model.Usuarios.Monto;
 
 import javax.swing.*;

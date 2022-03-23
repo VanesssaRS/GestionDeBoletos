@@ -1,4 +1,4 @@
-package Model.Usuarios.Administrador.Modulos;
+package Model.Usuarios;
 
 public enum TipoUsuario {
 
@@ -25,7 +25,7 @@ public enum TipoUsuario {
     public static int getValueInt(String index) {
         for (TipoUsuario member : TipoUsuario.values()) {
             if (member.name().equalsIgnoreCase(index)) {
-                return member.ordinal() + 1;
+                return member.ordinal();
             }
         }
         return 0;

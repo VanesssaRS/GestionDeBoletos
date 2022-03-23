@@ -7,7 +7,7 @@ package Visual.Pasajero;
 
 import Control.Pasajero.ComprarBoletoManager;
 import Control.SingleCallBack;
-import Model.Usuarios.Administrador.Modulos.AdminViajes;
+import Model.Modulos.AdminViajes;
 import Model.Usuarios.Monto;
 
 import javax.swing.*;
@@ -281,7 +281,7 @@ public class JComprarBoleto extends javax.swing.JPanel {
         });
     }//GEN-LAST:event_btnSelecionarViajeActionPerformed
 
-    private void clearFields(){
+    private void clearFields() {
         viajeSelected.setValor(0);
         viajeSelected.setId_viaje(0);
         viajeSelected.setHora(null);
@@ -302,6 +302,7 @@ public class JComprarBoleto extends javax.swing.JPanel {
         lblIva.setText("?");
         lblSubtotal.setText("?");
     }
+
     /**
      * Inicia un Frame donde mostrar al jugador mostrar los asientos
      *
@@ -320,12 +321,13 @@ public class JComprarBoleto extends javax.swing.JPanel {
         // TODO add your handling code here:
         if (viajeSelected != null && monto != null && ComprarBoletoManager.getInstace().getAsientos().size() > 0 && (int) jSpinner1.getValue() > 0) {
             int tipoPago = rbEfectivo.isSelected() ? 1 : 2;
-            ComprarBoletoManager.getInstace().insertarBoletos("123123123",monto, viajeSelected, (int) jSpinner1.getValue(), tipoPago, new SingleCallBack() {
+            ComprarBoletoManager.getInstace().insertarBoletos(monto, viajeSelected, (int) jSpinner1.getValue(), tipoPago, new SingleCallBack() {
                 @Override
                 public void onSucces(String msg) {
                     clearFields();
                     JOptionPane.showMessageDialog(null, msg);
                 }
+
                 @Override
                 public void onFailed() {
                     JOptionPane.showMessageDialog(null, "¡Ocurrio un problema en la insercción de datos!");

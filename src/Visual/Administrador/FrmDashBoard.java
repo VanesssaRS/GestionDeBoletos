@@ -5,13 +5,8 @@
  */
 package Visual.Administrador;
 
-import Control.Administrador.CooperativasManager;
-import Control.Administrador.UsuariosManager;
-import Control.Administrador.ViajesManager;
-import Control.SingleCallBack;
-import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
-import Model.Usuarios.Administrador.Modulos.AdminUsuarios;
-import Model.Usuarios.Administrador.Modulos.AdminViajes;
+import Model.Persona;
+
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -26,17 +21,19 @@ import java.util.Date;
  */
 public class FrmDashBoard extends javax.swing.JFrame {
     Date fecha = new Date();
-    Component currentComponen = null;
+    private Persona logedAdmin;
 
     /**
      * Creates new form UsuariosNRT
      */
-    public FrmDashBoard() {
+    public FrmDashBoard(Persona admin) {
         initComponents();
+        this.logedAdmin = admin;
         SimpleDateFormat fechasistema = new SimpleDateFormat("dd - MM - yyyy");
         lblFechaSistema.setText(fechasistema.format(fecha));
         SimpleDateFormat horasistema = new SimpleDateFormat("HH:mm");
         lblHora.setText(horasistema.format(fecha));
+        lblBienvenida.setText("Bienvenid@, "+admin.getNombre() + " " + admin.getApellido());
     }
 
     /**
@@ -61,6 +58,7 @@ public class FrmDashBoard extends javax.swing.JFrame {
         lblFechaSistema = new javax.swing.JLabel();
         lblHora = new javax.swing.JLabel();
         content = new javax.swing.JPanel();
+        lblBienvenida = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -201,6 +199,10 @@ public class FrmDashBoard extends javax.swing.JFrame {
 
         getContentPane().add(content, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 490));
 
+        lblBienvenida.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        lblBienvenida.setText("?");
+        getContentPane().add(lblBienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, 350, 40));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -301,7 +303,7 @@ public class FrmDashBoard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmDashBoard().setVisible(true);
+                new FrmDashBoard(null).setVisible(true);
             }
         });
     }
@@ -318,6 +320,7 @@ public class FrmDashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblBienvenida;
     private javax.swing.JLabel lblFechaSistema;
     private javax.swing.JLabel lblHora;
     // End of variables declaration//GEN-END:variables

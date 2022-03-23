@@ -1,4 +1,4 @@
-package Model.Usuarios.Administrador.Modulos;
+package Model.Modulos;
 
 import java.sql.Timestamp;
 import java.util.Date;

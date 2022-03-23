@@ -4,13 +4,11 @@ package Control.Administrador;
 import Control.SingleCallBack;
 import Control.Validaciones;
 import Model.Storage.DataBaseManager;
-import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
-import Model.Usuarios.Administrador.Modulos.AdminUsuarios;
-import Model.Usuarios.Administrador.Modulos.TipoUsuario;
+import Model.Modulos.AdminUsuarios;
+import Model.Usuarios.TipoUsuario;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class UsuariosManager {
 
@@ -92,7 +90,6 @@ public class UsuariosManager {
 
     public void actualizarUsuario(int codigo, String cedula, String nombre, String apellido, String email, String telefono, Date date, String direccion, String tipoUser, SingleCallBack callBack) {
         int typeUser = TipoUsuario.getValueInt(tipoUser);
-
         if (typeUser > 0) {
             String msg = DataBaseManager.getInstance().updateUsuario(codigo, cedula, nombre, apellido, email, telefono, date, direccion, typeUser);
             if (Validaciones.validarStrings(msg)) {

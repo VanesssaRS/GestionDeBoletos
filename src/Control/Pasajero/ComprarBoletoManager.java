@@ -4,8 +4,8 @@ import Control.GenericCallBack;
 import Control.SingleCallBack;
 import Control.Validaciones;
 import Model.Storage.DataBaseManager;
-import Model.Usuarios.Administrador.Modulos.AdminUsuarios;
-import Model.Usuarios.Administrador.Modulos.AdminViajes;
+import Model.Modulos.AdminUsuarios;
+import Model.Modulos.AdminViajes;
 import Model.Usuarios.Monto;
 
 import javax.xml.crypto.Data;
@@ -46,7 +46,7 @@ public class ComprarBoletoManager {
     public void insertarBoletos(String cedula, String nombre, String apellido, Monto monto, AdminViajes adminViajes, int numAsientos, int metodoPago, boolean isRegister, SingleCallBack callBack) {
         if (monto != null && adminViajes != null) {
             String msg;
-            if (isRegister) {
+            if (!isRegister) {
                 msg = DataBaseManager.getInstance().insertBoletoSinRegistro(cedula, nombre, apellido, monto, adminViajes, numAsientos, metodoPago, getStringAsientos());
             } else {
                 msg = DataBaseManager.getInstance().insertBoleto(monto, adminViajes, numAsientos, metodoPago, getStringAsientos());
@@ -60,7 +60,7 @@ public class ComprarBoletoManager {
         callBack.onFailed();
     }
 
-    public void insertarBoletos(String cedula, Monto monto, AdminViajes adminViajes, int numAsientos, int metodoPago, SingleCallBack callBack) {
+    public void insertarBoletos(Monto monto, AdminViajes adminViajes, int numAsientos, int metodoPago, SingleCallBack callBack) {
         if (monto != null && adminViajes != null) {
             String msg;
             msg = DataBaseManager.getInstance().insertBoleto(monto, adminViajes, numAsientos, metodoPago, getStringAsientos());

@@ -7,8 +7,8 @@ package Visual.Administrador;
 
 import Control.Administrador.UsuariosManager;
 import Control.SingleCallBack;
-import Model.Usuarios.Administrador.Modulos.AdminUsuarios;
-import Model.Usuarios.Administrador.Modulos.TipoUsuario;
+import Model.Modulos.AdminUsuarios;
+import Model.Usuarios.TipoUsuario;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;

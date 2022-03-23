@@ -5,12 +5,10 @@
  */
 package Visual.Administrador;
 
-import Control.Administrador.CooperativasManager;
 import Control.Administrador.UsuariosManager;
 import Control.SingleCallBack;
-import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
-import Model.Usuarios.Administrador.Modulos.AdminUsuarios;
-import Model.Usuarios.Administrador.Modulos.TipoUsuario;
+import Model.Modulos.AdminUsuarios;
+import Model.Usuarios.TipoUsuario;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

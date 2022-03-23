@@ -5,7 +5,7 @@
  */
 package Visual.Pasajero;
 
-import Visual.Vendedor.JVComprarBoleto;
+import Model.Persona;
 import java.awt.BorderLayout;
 
 /**
@@ -13,12 +13,14 @@ import java.awt.BorderLayout;
  * @author NexBorn
  */
 public class FrmPDashBoard extends javax.swing.JFrame {
-
+    private Persona loged;
     /**
      * Creates new form JCompraBoleto
      */
-    public FrmPDashBoard() {
+    public FrmPDashBoard(Persona pasajero) {
+        this.loged = pasajero;
         initComponents();
+        lblBienvenida.setText("Bienvenid@, "+pasajero.getNombre() + " " + pasajero.getApellido());
     }
 
     /**
@@ -31,14 +33,15 @@ public class FrmPDashBoard extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel4 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lblBienvenida = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnPerfil = new javax.swing.JButton();
         btnComprarBoleto = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         btnVerViajes = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         content = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(980, 559));
@@ -48,19 +51,24 @@ public class FrmPDashBoard extends javax.swing.JFrame {
         jLabel4.setText("11:23 AM");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 30, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel3.setText("Maters 20, de Juilio del 2021");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(236, 23, -1, -1));
+        lblBienvenida.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        lblBienvenida.setText("?");
+        getContentPane().add(lblBienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 20, 260, 30));
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 0));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Visual/img/usuario (2).png"))); // NOI18N
-        jButton1.setText("Mi perfil");
-        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 13, 106, 62));
+        btnPerfil.setBackground(new java.awt.Color(0, 0, 0));
+        btnPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Visual/img/usuario (2).png"))); // NOI18N
+        btnPerfil.setText("Mi perfil");
+        btnPerfil.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        btnPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPerfilActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 13, 106, 62));
 
         btnComprarBoleto.setBackground(new java.awt.Color(255, 0, 102));
         btnComprarBoleto.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -116,6 +124,10 @@ public class FrmPDashBoard extends javax.swing.JFrame {
 
         getContentPane().add(content, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 770, 480));
 
+        jLabel5.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabel5.setText("Maters 20, de Juilio del 2021");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(236, 23, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -140,6 +152,11 @@ public class FrmPDashBoard extends javax.swing.JFrame {
         content.revalidate();
         content.repaint();
     }//GEN-LAST:event_btnVerViajesActionPerformed
+
+    private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnPerfilActionPerformed
 
     /**
      * @param args the command line arguments
@@ -174,20 +191,21 @@ public class FrmPDashBoard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmPDashBoard().setVisible(true);
+                new FrmPDashBoard(null).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnComprarBoleto;
+    private javax.swing.JButton btnPerfil;
     private javax.swing.JButton btnVerViajes;
     private javax.swing.JPanel content;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblBienvenida;
     // End of variables declaration//GEN-END:variables
 }

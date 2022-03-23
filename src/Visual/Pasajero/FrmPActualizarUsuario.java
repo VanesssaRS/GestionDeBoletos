@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Visual.Administrador;
+package Visual.Pasajero;
 
+import Visual.Administrador.*;
 import Control.Administrador.UsuariosManager;
 import Control.SingleCallBack;
 import Control.Validaciones;
@@ -18,14 +19,14 @@ import java.sql.Date;
 /**
  * @author 59397
  */
-public class FrmActualizarUsuario extends javax.swing.JFrame {
+public class FrmPActualizarUsuario extends javax.swing.JFrame {
     //Funcionaaaa :D
     /**
      * Creates new form FrmAñadirCooperativa
      */
     private AdminUsuarios adminUsuarios;
 
-    public FrmActualizarUsuario(AdminUsuarios adminUsuarios) {
+    public FrmPActualizarUsuario(AdminUsuarios adminUsuarios) {
         this.adminUsuarios = adminUsuarios;
         initComponents();
         addValuesOnField();
@@ -297,6 +298,7 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
         Date date = new Date(jCalendarFechaNac.getDate().getTime());
         String direccion = txtDirecciónAU.getText();
         String tipouser = (String) cmbTipoUsuarioAU.getSelectedItem();
+        System.out.println(tipouser);
         if (Validaciones.validarStrings(cedula, nombre, apellido, email, direccion, tipouser)) {
             if (!Validaciones.isEmail(email)){
                 JOptionPane.showMessageDialog(null, "¡Ingrese un E-mail valido!");
@@ -386,14 +388,46 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmActualizarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmPActualizarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmActualizarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmPActualizarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmActualizarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmPActualizarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmActualizarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmPActualizarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -433,7 +467,7 @@ public class FrmActualizarUsuario extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmActualizarUsuario(null).setVisible(true);
+                new FrmPActualizarUsuario(null).setVisible(true);
             }
         });
     }

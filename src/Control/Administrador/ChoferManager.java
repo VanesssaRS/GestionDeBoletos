@@ -6,7 +6,7 @@
 package Control.Administrador;
 import Control.SingleCallBack;
 import Model.Storage.DataBaseManager;
-import Model.Usuarios.Administrador.Modulos.AdminChofer;
+import Model.Modulos.AdminChofer;
 import java.util.ArrayList;
 import java.util.HashMap;
 

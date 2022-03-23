@@ -9,8 +9,8 @@ import Control.Administrador.BusesManager;
 import Control.Administrador.CooperativasManager;
 import Control.SingleCallBack;
 import Control.Validaciones;
-import Model.Usuarios.Administrador.Modulos.AdminBuses;
-import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
+import Model.Modulos.AdminBuses;
+import Model.Modulos.AdminCooperativas;
 
 import javax.swing.*;
 

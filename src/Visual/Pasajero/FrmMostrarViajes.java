@@ -6,7 +6,7 @@
 package Visual.Pasajero;
 
 import Control.Administrador.ViajesManager;
-import Model.Usuarios.Administrador.Modulos.AdminViajes;
+import Model.Modulos.AdminViajes;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

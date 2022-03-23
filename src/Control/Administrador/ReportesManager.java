@@ -1,6 +1,6 @@
 package Control.Administrador;
 
-import Model.Usuarios.Administrador.Modulos.AdminReportes;
+import Model.Modulos.AdminReportes;
 
 import java.util.HashMap;
 

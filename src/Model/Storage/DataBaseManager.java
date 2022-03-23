@@ -1,6 +1,12 @@
 package Model.Storage;
 
-import Model.Usuarios.Administrador.Modulos.*;
+import Control.LoginManager;
+import Model.Modulos.AdminBuses;
+import Model.Modulos.AdminCooperativas;
+import Model.Modulos.AdminUsuarios;
+import Model.Modulos.AdminViajes;
+import Model.Persona;
+import Model.Usuarios.TipoUsuario;
 import Model.Usuarios.Monto;
 
 import java.sql.*;
@@ -18,6 +24,27 @@ public class DataBaseManager {
             dataBaseManager = new DataBaseManager();
         }
         return dataBaseManager;
+    }
+
+    public int login(String usuario,String contrasena){
+        String sql = "{CALL login(?,?)}";
+        int msg = 0;
+        try {
+            CallableStatement pp = database.open().prepareCall(sql);
+            pp.setString(1,usuario);
+            pp.setString(2, contrasena);
+
+            ResultSet rs = pp.executeQuery();
+            while (rs.next()) {
+                msg = rs.getInt("Mensaje");
+            }
+            pp.close();
+            return msg;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            database.close();
+            return 0;
+        }
     }
 
     public String updateViajes(AdminViajes viajes) {
@@ -115,18 +142,19 @@ public class DataBaseManager {
     }
 
     public String insertBoleto(Monto monto, AdminViajes adminViajes, int numAsientos, int metodoPago, String asientos) {
-        String sql = "{CALL crearBoleto(?,?,?,?,?,?,?,?)}";
+        String sql = "{CALL crearBoleto(?,?,?,?,?,?,?,?,?)}";
         String msg = "";
         try {
             CallableStatement pp = database.open().prepareCall(sql);
-            pp.setString(1, adminViajes.getNombreCooperativa());
-            pp.setString(2, adminViajes.getPartida());
-            pp.setString(3, adminViajes.getDestino());
-            pp.setString(4, adminViajes.getHora());
-            pp.setInt(5, numAsientos);
-            pp.setInt(6, metodoPago);
-            pp.setDouble(7, monto.getTotal());
-            pp.setString(8, asientos);
+            pp.setString(1, LoginManager.getLoggedPerson().getCedula());
+            pp.setString(2, adminViajes.getNombreCooperativa());
+            pp.setString(3, adminViajes.getPartida());
+            pp.setString(4, adminViajes.getDestino());
+            pp.setString(5, adminViajes.getHora());
+            pp.setInt(6, numAsientos);
+            pp.setInt(7, metodoPago);
+            pp.setDouble(8, monto.getTotal());
+            pp.setString(9, asientos);
             ResultSet rs = pp.executeQuery();
             while (rs.next()) {
                 msg = rs.getString("Mensaje");
@@ -341,7 +369,7 @@ public class DataBaseManager {
             pp.setString(7, telefono);
             pp.setDate(8, date);
             pp.setString(9, direccion);
-            pp.setInt(10, tipoUser + 1);
+            pp.setInt(10, tipoUser);
             ResultSet rs = pp.executeQuery();
             while (rs.next()) {
                 msg = rs.getString("Mensaje");
@@ -432,7 +460,29 @@ public class DataBaseManager {
         return null;
     }
 
+    public Persona getPersona(int id) {
+        try {
+            Statement statement = database.open().createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM persona where id_persona = " + id );
+            while (resultSet.next()) {
+                return new Persona(resultSet.getInt("id_persona"),
+                        resultSet.getString("Cedula"),
+                        resultSet.getString("Nombre"),
+                        resultSet.getString("Apellido"),
+                        resultSet.getString("Email"),
+                        resultSet.getString("Telefono"),
+                        resultSet.getString("Direccion"),
+                        new java.util.Date(resultSet.getDate("FechaNacimiento").getTime()),
+                        TipoUsuario.getOrdinal(resultSet.getInt("id_tipoUser")));
+            }
+            resultSet.close();
 
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        database.close();
+        return null;
+    }
     public ArrayList<String> getAsientos(String bus) {
         ArrayList<String> list = new ArrayList<>();
         try {
@@ -606,23 +656,4 @@ public class DataBaseManager {
 
 //-----------------------------------INICIAR SESION---------------------------------------------
 
-    public boolean Login(String nombre, String contraseña) {
-
-        boolean respuesta = false;
-
-        try {
-            Statement statement = database.open().createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM USUARIO WHERE usuario='" + nombre + "' AND clave='" + contraseña + "'");
-            while (resultSet.next()) {
-                respuesta = true;
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            respuesta = false;
-        } finally {
-            database.close();
-        }
-        database.close();
-        return respuesta;
-    }
 }

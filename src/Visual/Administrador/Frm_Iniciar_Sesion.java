@@ -5,7 +5,7 @@
  */
 package Visual.Administrador;
 
-import Control.loginManager;
+import Control.LoginManager;
 import javax.swing.JOptionPane;
 
 /**
@@ -112,7 +112,7 @@ public class Frm_Iniciar_Sesion extends javax.swing.JFrame {
         
         usuario= this.txt_usuario.getText();
         contraseña= this.contraseña();
-        if(loginManager.getinstance().login(usuario, contraseña)){
+        if(LoginManager.getinstance().login(usuario, contraseña)){
             JOptionPane.showMessageDialog(null, "INICIO CON EXITO","QUE PRO",JOptionPane.INFORMATION_MESSAGE);
         }else{
             JOptionPane.showMessageDialog(null, "Usuario y contraseña incorrectas","Error de Conexion",JOptionPane.ERROR_MESSAGE);

@@ -2,8 +2,8 @@ package Control.Administrador;
 
 import Control.SingleCallBack;
 import Model.Storage.DataBaseManager;
-import Model.Usuarios.Administrador.Modulos.AdminBuses;
-import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
+import Model.Modulos.AdminBuses;
+import Model.Modulos.AdminCooperativas;
 
 import java.util.ArrayList;
 import java.util.HashMap;

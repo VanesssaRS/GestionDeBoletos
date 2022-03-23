@@ -7,7 +7,7 @@ package Visual.Administrador;
 
 import Control.Administrador.ViajesManager;
 import Control.SingleCallBack;
-import Model.Usuarios.Administrador.Modulos.AdminViajes;
+import Model.Modulos.AdminViajes;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

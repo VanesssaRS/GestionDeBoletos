@@ -1,4 +1,4 @@
-package Model.Usuarios.Administrador.Modulos;
+package Model.Modulos;
 
 public class AdminBuses {
 

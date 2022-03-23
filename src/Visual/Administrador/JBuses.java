@@ -8,7 +8,7 @@ package Visual.Administrador;
 import Control.Administrador.BusesManager;
 import Control.SingleCallBack;
 import Control.Validaciones;
-import Model.Usuarios.Administrador.Modulos.AdminBuses;
+import Model.Modulos.AdminBuses;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
@@ -41,7 +41,6 @@ public class JBuses extends javax.swing.JPanel {
         jLabel35 = new javax.swing.JLabel();
         lblInicio = new javax.swing.JLabel();
         lblBuses = new javax.swing.JLabel();
-        btnRegresar = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblBuses = new javax.swing.JTable();
@@ -53,19 +52,20 @@ public class JBuses extends javax.swing.JPanel {
 
         setMinimumSize(new java.awt.Dimension(770, 488));
         setPreferredSize(new java.awt.Dimension(770, 488));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel35.setFont(new java.awt.Font("Verdana", 1, 20)); // NOI18N
         jLabel35.setText("Buses");
+        add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, -1, -1));
 
         lblInicio.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         lblInicio.setForeground(new java.awt.Color(3, 145, 181));
         lblInicio.setText("Inicio");
+        add(lblInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, -1, -1));
 
         lblBuses.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         lblBuses.setText(" > Buses");
-
-        btnRegresar.setBackground(new java.awt.Color(255, 255, 255));
-        btnRegresar.setText("< Regresar");
+        add(lblBuses, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, -1, -1));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -142,7 +142,7 @@ public class JBuses extends javax.swing.JPanel {
                         .addComponent(btnActualizar)
                         .addGap(133, 133, 133)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 321, Short.MAX_VALUE)))
+                        .addGap(0, 182, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(209, 209, 209)
@@ -166,54 +166,14 @@ public class JBuses extends javax.swing.JPanel {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48))
+                .addGap(21, 21, 21))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 899, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(50, 50, 50)
-                            .addComponent(jLabel35)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 630, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lblInicio)
-                            .addGap(2, 2, 2)
-                            .addComponent(lblBuses)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnRegresar))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(17, 17, 17)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addContainerGap()))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 565, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jLabel35)
-                    .addGap(4, 4, 4)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(18, 18, 18)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblInicio)
-                            .addComponent(lblBuses))
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addContainerGap()))
-        );
+        add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, 395));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAñadirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirMouseClicked
@@ -291,7 +251,6 @@ public class JBuses extends javax.swing.JPanel {
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAñadir;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JPanel jPanel5;

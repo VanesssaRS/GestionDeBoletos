@@ -10,8 +10,8 @@ import Control.Administrador.CooperativasManager;
 import Control.Administrador.ViajesManager;
 import Control.SingleCallBack;
 import Control.Validaciones;
-import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
-import Model.Usuarios.Administrador.Modulos.AdminViajes;
+import Model.Modulos.AdminCooperativas;
+import Model.Modulos.AdminViajes;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;

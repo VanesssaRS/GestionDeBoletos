@@ -10,7 +10,7 @@ import Control.Administrador.CooperativasManager;
 import Control.Administrador.ViajesManager;
 import Control.SingleCallBack;
 import Control.Validaciones;
-import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
+import Model.Modulos.AdminCooperativas;
 
 
 import javax.swing.*;

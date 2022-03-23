@@ -1,7 +1,7 @@
 package Control.Administrador;
 import Control.SingleCallBack;
 import Model.Storage.DataBaseManager;
-import Model.Usuarios.Administrador.Modulos.AdminUsuarios;
+import Model.Modulos.AdminUsuarios;
 import java.util.ArrayList;
 
 import java.util.HashMap;

@@ -4,8 +4,8 @@ import Control.SingleCallBack;
 import Control.Utils;
 import Control.Validaciones;
 import Model.Storage.DataBaseManager;
-import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
-import Model.Usuarios.Administrador.Modulos.AdminViajes;
+import Model.Modulos.AdminCooperativas;
+import Model.Modulos.AdminViajes;
 
 import java.util.ArrayList;
 import java.util.Date;

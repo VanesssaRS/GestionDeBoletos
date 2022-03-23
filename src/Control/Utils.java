@@ -1,7 +1,7 @@
 package Control;
 
 import Control.Administrador.CooperativasManager;
-import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
+import Model.Modulos.AdminCooperativas;
 
 public class Utils {
     /**

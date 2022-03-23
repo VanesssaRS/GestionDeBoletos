@@ -5,6 +5,7 @@
  */
 package Visual.Vendedor;
 
+import Model.Persona;
 import Visual.Pasajero.JComprarBoleto;
 import Visual.Vendedor.JVComprarBoleto;
 import java.awt.BorderLayout;
@@ -18,9 +19,10 @@ public class FrmVDashBoard extends javax.swing.JFrame {
     /**
      * Creates new form JCompraBoleto
      */
-    public FrmVDashBoard() {
+    public FrmVDashBoard(Persona persona) {
         initComponents();
         generarJPanel();
+        lblBienvenida.setText("Bienvenid@, "+persona.getNombre() + " " + persona.getApellido());
     }
 
     /**
@@ -35,6 +37,7 @@ public class FrmVDashBoard extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         content = new javax.swing.JPanel();
+        lblBienvenida = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(980, 559));
@@ -63,6 +66,10 @@ public class FrmVDashBoard extends javax.swing.JFrame {
         );
 
         getContentPane().add(content, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 1080, 478));
+
+        lblBienvenida.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        lblBienvenida.setText("?");
+        getContentPane().add(lblBienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 380, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -108,7 +115,7 @@ public class FrmVDashBoard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmVDashBoard().setVisible(true);
+                new FrmVDashBoard(null).setVisible(true);
             }
         });
     }
@@ -117,5 +124,6 @@ public class FrmVDashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel content;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lblBienvenida;
     // End of variables declaration//GEN-END:variables
 }
