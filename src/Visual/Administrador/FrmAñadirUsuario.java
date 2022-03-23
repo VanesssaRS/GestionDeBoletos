@@ -5,8 +5,14 @@
  */
 package Visual.Administrador;
 
+import Control.Administrador.UsuariosManager;
+import Control.SingleCallBack;
+import Control.Validaciones;
+
+import javax.swing.*;
+import java.util.Date;
+
 /**
- *
  * @author 59397
  */
 public class FrmAñadirUsuario extends javax.swing.JFrame {
@@ -16,7 +22,8 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
      */
     public FrmAñadirUsuario() {
         initComponents();
-
+        insertComboValue();
+        ((JTextField) dtcFechaNacimiento.getDateEditor()).setEditable(false);
     }
 
     /**
@@ -36,24 +43,24 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtlugarDestino = new javax.swing.JTextField();
+        txtCedula = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        txtlugarDestino1 = new javax.swing.JTextField();
-        txtlugarDestino2 = new javax.swing.JTextField();
-        txtlugarDestino6 = new javax.swing.JTextField();
-        txtlugarDestino7 = new javax.swing.JTextField();
-        txtlugarDestino8 = new javax.swing.JTextField();
-        txtlugarDestino4 = new javax.swing.JTextField();
-        txtlugarDestino5 = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtApellido = new javax.swing.JTextField();
+        txtContrasena = new javax.swing.JTextField();
+        txtDireccion = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         cmbTipoUsuario = new javax.swing.JComboBox<>();
         dtcFechaNacimiento = new com.toedter.calendar.JDateChooser();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Añadir Usuario");
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
@@ -72,6 +79,11 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
         btnGuardar.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Visual/img/guardaricon.png"))); // NOI18N
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -82,10 +94,15 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel6.setText("Email:");
 
-        txtlugarDestino.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        txtlugarDestino.addActionListener(new java.awt.event.ActionListener() {
+        txtCedula.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtCedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtlugarDestinoActionPerformed(evt);
+                txtCedulaActionPerformed(evt);
+            }
+        });
+        txtCedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCedulaKeyTyped(evt);
             }
         });
 
@@ -104,59 +121,87 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel11.setText("Contraseña:");
 
-        txtlugarDestino1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        txtlugarDestino1.addActionListener(new java.awt.event.ActionListener() {
+        txtNombre.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtlugarDestino1ActionPerformed(evt);
+                txtNombreActionPerformed(evt);
+            }
+        });
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
             }
         });
 
-        txtlugarDestino2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        txtlugarDestino2.addActionListener(new java.awt.event.ActionListener() {
+        txtApellido.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtlugarDestino2ActionPerformed(evt);
+                txtApellidoActionPerformed(evt);
+            }
+        });
+        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoKeyTyped(evt);
             }
         });
 
-        txtlugarDestino6.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        txtlugarDestino6.addActionListener(new java.awt.event.ActionListener() {
+        txtContrasena.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtContrasena.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtlugarDestino6ActionPerformed(evt);
+                txtContrasenaActionPerformed(evt);
             }
         });
 
-        txtlugarDestino7.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        txtlugarDestino7.addActionListener(new java.awt.event.ActionListener() {
+        txtDireccion.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtDireccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtlugarDestino7ActionPerformed(evt);
+                txtDireccionActionPerformed(evt);
+            }
+        });
+        txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionKeyTyped(evt);
             }
         });
 
-        txtlugarDestino8.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        txtlugarDestino8.addActionListener(new java.awt.event.ActionListener() {
+        txtUsuario.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtlugarDestino8ActionPerformed(evt);
+                txtUsuarioActionPerformed(evt);
+            }
+        });
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyTyped(evt);
             }
         });
 
-        txtlugarDestino4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        txtlugarDestino4.addActionListener(new java.awt.event.ActionListener() {
+        txtTelefono.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtlugarDestino4ActionPerformed(evt);
+                txtTelefonoActionPerformed(evt);
+            }
+        });
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
             }
         });
 
-        txtlugarDestino5.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        txtlugarDestino5.addActionListener(new java.awt.event.ActionListener() {
+        txtEmail.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtlugarDestino5ActionPerformed(evt);
+                txtEmailActionPerformed(evt);
+            }
+        });
+        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEmailKeyTyped(evt);
             }
         });
 
         jLabel12.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel12.setText("Tipo Usuario:");
-
-        cmbTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vendedor", "Administrador", " " }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -168,7 +213,7 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
                         .addGap(37, 37, 37)
                         .addComponent(jLabel2)
                         .addGap(84, 84, 84)
-                        .addComponent(txtlugarDestino1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,9 +226,9 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
                                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(18, 18, 18)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtlugarDestino7)
-                                        .addComponent(txtlugarDestino8)
-                                        .addComponent(txtlugarDestino6)
+                                        .addComponent(txtDireccion)
+                                        .addComponent(txtUsuario)
+                                        .addComponent(txtContrasena)
                                         .addComponent(cmbTipoUsuario, 0, 204, Short.MAX_VALUE)))
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,13 +238,13 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
                                         .addComponent(jLabel9))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtlugarDestino2, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtlugarDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(1, 1, 1)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(txtlugarDestino5, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
-                                                .addComponent(txtlugarDestino4, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                                                .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                                                .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
                                                 .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                             .addComponent(jLabel7)
                             .addComponent(jLabel8)))
@@ -223,17 +268,17 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel2))
-                    .addComponent(txtlugarDestino1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtlugarDestino2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel4))
-                    .addComponent(txtlugarDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -245,9 +290,9 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
                         .addGap(7, 7, 7)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtlugarDestino5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(7, 7, 7)
-                        .addComponent(txtlugarDestino4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
@@ -259,11 +304,11 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtlugarDestino7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
-                        .addComponent(txtlugarDestino8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
-                        .addComponent(txtlugarDestino6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -278,37 +323,131 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtlugarDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtlugarDestinoActionPerformed
+    private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtlugarDestinoActionPerformed
+    }//GEN-LAST:event_txtCedulaActionPerformed
 
-    private void txtlugarDestino1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtlugarDestino1ActionPerformed
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtlugarDestino1ActionPerformed
+    }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void txtlugarDestino2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtlugarDestino2ActionPerformed
+    private void txtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtlugarDestino2ActionPerformed
+    }//GEN-LAST:event_txtApellidoActionPerformed
 
-    private void txtlugarDestino6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtlugarDestino6ActionPerformed
+    private void txtContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContrasenaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtlugarDestino6ActionPerformed
+    }//GEN-LAST:event_txtContrasenaActionPerformed
 
-    private void txtlugarDestino7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtlugarDestino7ActionPerformed
+    private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtlugarDestino7ActionPerformed
+    }//GEN-LAST:event_txtDireccionActionPerformed
 
-    private void txtlugarDestino8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtlugarDestino8ActionPerformed
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtlugarDestino8ActionPerformed
+    }//GEN-LAST:event_txtUsuarioActionPerformed
 
-    private void txtlugarDestino4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtlugarDestino4ActionPerformed
+    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtlugarDestino4ActionPerformed
+    }//GEN-LAST:event_txtTelefonoActionPerformed
 
-    private void txtlugarDestino5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtlugarDestino5ActionPerformed
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtlugarDestino5ActionPerformed
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    private void insertComboValue(){
+        for (String item: UsuariosManager.getInstance().getDataSource()){
+            cmbTipoUsuario.addItem(item);
+        }
+    }
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+        String cedula = txtCedula.getText();
+        String email = txtEmail.getText();
+        String telefono = txtTelefono.getText();
+        Date fechanac = dtcFechaNacimiento.getDate();
+        String direcc = txtDireccion.getText();
+        String usuario = txtUsuario.getText();
+        String contra = txtContrasena.getText();
+        String tipoUser = (String) cmbTipoUsuario.getSelectedItem();
+
+        if (Validaciones.validarStrings(nombre, apellido, cedula, email, telefono, direcc, usuario, contra, tipoUser) && fechanac != null) {
+            if (!Validaciones.isEmail(email)){
+                JOptionPane.showMessageDialog(null, "¡Ingrese un E-mail valido!");
+                return;
+            }
+            UsuariosManager.getInstance().ingresarUsuario(nombre, apellido, cedula, email, telefono, new java.sql.Date(fechanac.getTime()), direcc, usuario, contra, tipoUser, new SingleCallBack() {
+                @Override
+                public void onSucces(String msg) {
+                    JOptionPane.showMessageDialog(null, msg);
+                }
+
+                @Override
+                public void onFailed() {
+                    JOptionPane.showMessageDialog(null, "¡Ha ocurrido un problema en la inserción!");
+                }
+            });
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "¡Rellene los campos!");
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(!Character.isLetter(valida)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(!Character.isLetter(valida)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtApellidoKeyTyped
+
+    private void txtCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(!Character.isDigit(valida)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCedulaKeyTyped
+
+    private void txtEmailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailKeyTyped
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(!Character.isDigit(valida)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
+    private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(Character.isLetter(valida) || Character.isDigit(valida)){
+            return;
+        }
+        evt.consume();
+    }//GEN-LAST:event_txtDireccionKeyTyped
+
+    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(Character.isLetter(valida) || Character.isDigit(valida)){
+            return;
+        }
+        evt.consume();
+    }//GEN-LAST:event_txtUsuarioKeyTyped
 
     /**
      * @param args the command line arguments
@@ -317,7 +456,7 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -372,13 +511,13 @@ public class FrmAñadirUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField txtlugarDestino;
-    private javax.swing.JTextField txtlugarDestino1;
-    private javax.swing.JTextField txtlugarDestino2;
-    private javax.swing.JTextField txtlugarDestino4;
-    private javax.swing.JTextField txtlugarDestino5;
-    private javax.swing.JTextField txtlugarDestino6;
-    private javax.swing.JTextField txtlugarDestino7;
-    private javax.swing.JTextField txtlugarDestino8;
+    private javax.swing.JTextField txtApellido;
+    private javax.swing.JTextField txtCedula;
+    private javax.swing.JTextField txtContrasena;
+    private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

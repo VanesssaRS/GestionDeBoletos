@@ -2,10 +2,7 @@ package Control.Administrador;
 
 import Control.SingleCallBack;
 import Model.Storage.DataBaseManager;
-import Model.Storage.SQLite;
-import Model.Usuarios.Administrador.Administrador;
-import Model.Usuarios.Administrador.Modulos.AdminBuses;
-import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
+import Model.Modulos.AdminCooperativas;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,8 +30,9 @@ public class CooperativasManager {
      * @param callBack     Informa el estado de la consulta en la base de datos.
      */
     public void agregarDatos(String nombre, String codProvincia, int nBuses, SingleCallBack callBack) {
-        if (dataBaseManager.insertCooperativa(nombre, codProvincia, nBuses)) {
-            callBack.onSucces();
+        String mensaje = dataBaseManager.insertCooperativa(nombre, codProvincia, nBuses);
+        if (mensaje != null && !mensaje.equalsIgnoreCase("")) {
+            callBack.onSucces(mensaje);
             return;
         }
         callBack.onFailed();
@@ -46,19 +44,12 @@ public class CooperativasManager {
      * @return Retorna una lista de las Cooperativas obtenidad en base de datos.
      */
     public ArrayList<AdminCooperativas> getListCooperativas() {
-        ArrayList<AdminCooperativas> list = dataBaseManager.getCooperativas();
-        if (list != null && list.size() > 0) {
-            for (AdminCooperativas item : list) {
-                cooperativasHashMap.put(item.getId(), item);
-            }
-        }
-        return list;
+        return dataBaseManager.getCooperativas();
     }
 
     public void updateCooperativa(String nombre, int codigo, int numBuses, String codProvi, SingleCallBack callBack) {
         if (dataBaseManager.updateCooperativa(nombre, codigo, numBuses, codProvi)) {
-            cooperativasHashMap.put(codigo, new AdminCooperativas(codigo, nombre, codProvi, numBuses));
-            callBack.onSucces();
+            callBack.onSucces("Se ha actualizado correctamente");
             return;
         }
         callBack.onFailed();
@@ -66,8 +57,7 @@ public class CooperativasManager {
 
     public void deleteCooperativa(int id, SingleCallBack callBack){
         if(dataBaseManager.deleteCooperativa(id)){
-            cooperativasHashMap.remove(id);
-            callBack.onSucces();
+            callBack.onSucces("Elimminado correctamente");
             return;
         }
         callBack.onFailed();

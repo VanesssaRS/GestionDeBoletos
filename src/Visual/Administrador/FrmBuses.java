@@ -8,11 +8,13 @@ package Visual.Administrador;
 import Control.Administrador.BusesManager;
 import Control.Administrador.CooperativasManager;
 import Control.SingleCallBack;
-import Model.Usuarios.Administrador.Modulos.AdminBuses;
-import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
+import Control.Validaciones;
+import Model.Modulos.AdminBuses;
+import Model.Modulos.AdminCooperativas;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -53,6 +55,8 @@ public class FrmBuses extends javax.swing.JFrame {
         btnAñadir = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        txtFiltro = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         btnMiPerfil = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
@@ -89,7 +93,7 @@ public class FrmBuses extends javax.swing.JFrame {
         tblBuses.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         tblBuses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+
             },
             new String [] {
                 "Codigo", "Placa", "Num. Asientos", "Cooperativa"
@@ -135,6 +139,15 @@ public class FrmBuses extends javax.swing.JFrame {
             }
         });
 
+        txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltroKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setText("Filtro:");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -145,26 +158,35 @@ public class FrmBuses extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(jScrollPane2))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(156, 156, 156)
-                                .addComponent(btnActualizar)
-                                .addGap(133, 133, 133)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(299, 299, 299)
-                                .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(156, 156, 156)
+                        .addComponent(btnActualizar)
+                        .addGap(133, 133, 133)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 178, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(209, 209, 209)
+                .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(21, 21, 21)
                 .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -306,18 +328,15 @@ public class FrmBuses extends javax.swing.JFrame {
                     .addComponent(lblFechaSistema)
                     .addComponent(lblHora))
                 .addGap(18, 18, 18)
+                .addComponent(jLabel35)
+                .addGap(4, 4, 4)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel35)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblInicio)
-                            .addComponent(lblBuses)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnRegresar)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblInicio)
+                        .addComponent(lblBuses))
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
 
@@ -331,8 +350,16 @@ public class FrmBuses extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAñadirMouseClicked
 
     private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
-        FrmActualizarBusAfiliado frmActualizarBusAfiliado= new FrmActualizarBusAfiliado();
-        frmActualizarBusAfiliado.setVisible(true);
+        int selectedRow = tblBuses.getSelectedRow();
+        if(selectedRow >=0){
+            int codigo = (int) tblBuses.getModel().getValueAt(selectedRow,0);
+            String bus = (String) tblBuses.getModel().getValueAt(selectedRow,1);
+            int numAsientos = (int) tblBuses.getModel().getValueAt(selectedRow,2);
+            String cooperativa = (String) tblBuses.getModel().getValueAt(selectedRow,3);
+            if(Validaciones.validarStrings(bus,cooperativa)){
+                new FrmActualizarBusAfiliado(new AdminBuses(codigo,bus,numAsientos,cooperativa)).setVisible(true);
+            }
+        }
     }//GEN-LAST:event_btnActualizarMouseClicked
 
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
@@ -346,11 +373,10 @@ public class FrmBuses extends javax.swing.JFrame {
             int codigo = (int) tblBuses.getModel().getValueAt(selectRow,0);
             BusesManager.getInstance().deleteBus(codigo, new SingleCallBack() {
                 @Override
-                public void onSucces() {
-                    tblBuses.remove(selectRow);
-                    JOptionPane.showMessageDialog(null, "¡Se eliminó correctamente!");
+                public void onSucces(String msg) {
+                    ((DefaultTableModel) tblBuses.getModel()).removeRow(selectRow);
+                    JOptionPane.showMessageDialog(null, msg);
                 }
-
                 @Override
                 public void onFailed() {
                     JOptionPane.showMessageDialog(null, "¡Ha ocurrido un error al eliminar los datos!");
@@ -361,6 +387,17 @@ public class FrmBuses extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Selecciona un bus!");
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void txtFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyReleased
+        // TODO add your handling code here:
+        filtro(txtFiltro.getText(),tblBuses);
+    }//GEN-LAST:event_txtFiltroKeyReleased
+
+    private void filtro(String consulta, JTable jtableBuscar){
+        DefaultTableModel dm = (DefaultTableModel) jtableBuscar.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(dm);
+        jtableBuscar.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(consulta));
+    }
     public void insertDataInTable() {
         DefaultTableModel modelo = (DefaultTableModel) tblBuses.getModel();
         if (modelo != null) {
@@ -426,6 +463,7 @@ public class FrmBuses extends javax.swing.JFrame {
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnViajes;
     private javax.swing.JButton jButton12;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -437,5 +475,6 @@ public class FrmBuses extends javax.swing.JFrame {
     private javax.swing.JLabel lblHora;
     private javax.swing.JLabel lblInicio;
     private javax.swing.JTable tblBuses;
+    private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 }

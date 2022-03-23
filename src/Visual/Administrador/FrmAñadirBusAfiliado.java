@@ -9,8 +9,8 @@ import Control.Administrador.BusesManager;
 import Control.Administrador.CooperativasManager;
 import Control.SingleCallBack;
 import Control.Validaciones;
-import Model.Usuarios.Administrador.Modulos.AdminBuses;
-import Model.Usuarios.Administrador.Modulos.AdminCooperativas;
+import Model.Modulos.AdminBuses;
+import Model.Modulos.AdminCooperativas;
 
 import javax.swing.*;
 
@@ -19,13 +19,14 @@ import javax.swing.*;
  * @author 59397
  */
 public class FrmAñadirBusAfiliado extends javax.swing.JFrame {
-
+    //Funciona :D
     /**
      * Creates new form FrmAñadirCooperativa
      */
     public FrmAñadirBusAfiliado() {
         initComponents();
         insertDataCombo();
+        (( JSpinner.DefaultEditor )Nasientos.getEditor()).getTextField().setEditable(false);
     }
 
     /**
@@ -47,7 +48,7 @@ public class FrmAñadirBusAfiliado extends javax.swing.JFrame {
         cmbCooperativa = new javax.swing.JComboBox<>();
         Nasientos = new javax.swing.JSpinner();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Añadir Bus Afiliado");
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
@@ -73,6 +74,11 @@ public class FrmAñadirBusAfiliado extends javax.swing.JFrame {
 
         btnCancelar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel5.setText("Cooperativa:");
@@ -95,7 +101,7 @@ public class FrmAñadirBusAfiliado extends javax.swing.JFrame {
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Nasientos, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Nasientos, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(200, 200, 200))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -143,15 +149,19 @@ public class FrmAñadirBusAfiliado extends javax.swing.JFrame {
         int numAsientos = Integer.parseInt(Nasientos.getValue().toString());
         String cooperativa =(String) cmbCooperativa.getSelectedItem();
         if(Validaciones.validarStrings(placa,cooperativa)){
+            if(numAsientos > 25){
+                JOptionPane.showMessageDialog(null, "El maximo de asiento es de 25");
+                return;
+            }
             BusesManager.getInstance().agregarBusAfiliado(placa, numAsientos, cooperativa, new SingleCallBack() {
                 @Override
-                public void onSucces() {
-                    JOptionPane.showMessageDialog(null, "¡Se agregó correctamente!");
+                public void onSucces(String msg) {
+                    JOptionPane.showMessageDialog(null, msg);
                 }
 
                 @Override
                 public void onFailed() {
-                    JOptionPane.showMessageDialog(null, "¡Error en la inserción de datos!");
+                    JOptionPane.showMessageDialog(null, "¡Error en la base de datos!");
                 }
             });
             return;
@@ -159,6 +169,11 @@ public class FrmAñadirBusAfiliado extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "¡Complete los datos!");
 
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
 
     public void insertDataCombo(){

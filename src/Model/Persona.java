@@ -1,16 +1,21 @@
 package Model;
 
+import Model.Usuarios.TipoUsuario;
+
+import java.util.Date;
+
 public class Persona {
     private int id;
-    private int cedula;
+    private String cedula;
     private String nombre;
     private String apellido;
     private String correo;
-    private int telefono;
+    private String telefono;
     private String direccion;
-    private String fechaNacimiento;
+    private Date fechaNacimiento;
+    private TipoUsuario tipoUsuario;
 
-    public Persona(int id, int cedula, String nombre, String apellido, String correo, int telefono, String direccion, String fechaNacimiento) {
+    public Persona(int id, String cedula, String nombre, String apellido, String correo, String telefono, String direccion, Date fechaNacimiento, TipoUsuario tipoUsuario) {
         this.id = id;
         this.cedula = cedula;
         this.nombre = nombre;
@@ -19,9 +24,10 @@ public class Persona {
         this.telefono = telefono;
         this.direccion = direccion;
         this.fechaNacimiento = fechaNacimiento;
+        this.tipoUsuario = tipoUsuario;
     }
 
-    public int getCedula() {
+    public String getCedula() {
         return cedula;
     }
 
@@ -37,7 +43,7 @@ public class Persona {
         return correo;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
@@ -45,7 +51,15 @@ public class Persona {
         return direccion;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
     }
 }

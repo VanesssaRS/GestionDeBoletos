@@ -5,11 +5,18 @@
  */
 package Visual.Administrador;
 
+import Control.Administrador.UsuariosManager;
+import Control.SingleCallBack;
+import Model.Modulos.AdminUsuarios;
+import Model.Usuarios.TipoUsuario;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
  * @author 59397
  */
 public class FrmUsuarios extends javax.swing.JFrame {
@@ -19,12 +26,13 @@ public class FrmUsuarios extends javax.swing.JFrame {
      * Creates new form UsuariosNRT
      */
     public FrmUsuarios() {
-        
+
         initComponents();
         SimpleDateFormat fechasistema = new SimpleDateFormat("dd - MM - yyyy");
         lblFechaSistema.setText(fechasistema.format(fecha));
         SimpleDateFormat horasistema = new SimpleDateFormat("HH:mm");
         lblHora.setText(horasistema.format(fecha));
+        insertDataInTable();
     }
 
     /**
@@ -44,6 +52,8 @@ public class FrmUsuarios extends javax.swing.JFrame {
         btnAñadir = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        txtFiltro = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         btnMiPerfil = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
@@ -73,6 +83,7 @@ public class FrmUsuarios extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menu - Administrador");
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -80,15 +91,20 @@ public class FrmUsuarios extends javax.swing.JFrame {
         tblUsuarios.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
+                "Codigo", "Nombre", "Apellido", "Cedula", "Email", "Telefono", "Fecha Nacimiento", "Direccion", "TipoUser"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tblUsuarios);
 
         btnAñadir.setBackground(java.awt.SystemColor.activeCaption);
@@ -110,6 +126,20 @@ public class FrmUsuarios extends javax.swing.JFrame {
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Visual/img/eliminaricon.png"))); // NOI18N
         btnEliminar.setText("    Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltroKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setText("Filtro:");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -132,15 +162,25 @@ public class FrmUsuarios extends javax.swing.JFrame {
                                 .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 178, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(2, 2, 2)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -301,15 +341,85 @@ public class FrmUsuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAñadirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirMouseClicked
-        FrmAñadirUsuario frmAñadirUsuario= new FrmAñadirUsuario();
+        FrmAñadirUsuario frmAñadirUsuario = new FrmAñadirUsuario();
         frmAñadirUsuario.setVisible(true);
     }//GEN-LAST:event_btnAñadirMouseClicked
 
+    public void insertDataInTable() {
+        DefaultTableModel modelo = (DefaultTableModel) tblUsuarios.getModel();
+        if (modelo != null) {
+            for (AdminUsuarios item : UsuariosManager.getInstance().getListUsuarios()) {
+                Object[] fila = new Object[10];
+                fila[0] = item.getCode();
+                fila[1] = item.getNombre();
+                fila[2] = item.getApellido();
+                fila[3] = item.getCedula();
+                fila[4] = item.getEmail();
+                fila[5] = item.getTelefono();
+                fila[6] = item.getFechanac();
+                fila[7] = item.getDirecc();
+                fila[8] = item.getTipoUser();
+                fila[9] = item.getApellido();
+
+                modelo.addRow(fila);
+                tblUsuarios.setModel(modelo);
+            }
+        }
+    }
+
     private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
-        FrmActualizarUsuario frmActualizarUsuario = new FrmActualizarUsuario();
-        frmActualizarUsuario.setVisible(true);
+        int rowSelectect = tblUsuarios.getSelectedRow();
+        if (rowSelectect >= 0) {
+            AdminUsuarios adminUsuarios = new AdminUsuarios();
+            adminUsuarios.setCode((int) tblUsuarios.getModel().getValueAt(rowSelectect, 0));
+            adminUsuarios.setNombre((String) tblUsuarios.getModel().getValueAt(rowSelectect, 1));
+            adminUsuarios.setApellido((String) tblUsuarios.getModel().getValueAt(rowSelectect, 2));
+            adminUsuarios.setCedula((String) tblUsuarios.getModel().getValueAt(rowSelectect, 3));
+            adminUsuarios.setEmail((String) tblUsuarios.getModel().getValueAt(rowSelectect, 4));
+            adminUsuarios.setTelefono((String) tblUsuarios.getModel().getValueAt(rowSelectect, 5));
+            adminUsuarios.setFechanac((Date) tblUsuarios.getModel().getValueAt(rowSelectect, 6));
+            adminUsuarios.setDirecc((String) tblUsuarios.getModel().getValueAt(rowSelectect, 7));
+            adminUsuarios.setTipoUser((TipoUsuario) tblUsuarios.getModel().getValueAt(rowSelectect, 8));
+            FrmActualizarUsuario frmActualizarUsuario = new FrmActualizarUsuario(adminUsuarios);
+            frmActualizarUsuario.setVisible(true);
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "¡Selecciona al usuario para Actualizar!");
     }//GEN-LAST:event_btnActualizarMouseClicked
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        int rowSelectect = tblUsuarios.getSelectedRow();
+        if (rowSelectect >= 0) {
+            int codigo = (int) tblUsuarios.getModel().getValueAt(rowSelectect, 0);
+            UsuariosManager.getInstance().deleteUsuarios(codigo, new SingleCallBack() {
+                @Override
+                public void onSucces(String msg) {
+                    ((DefaultTableModel) tblUsuarios.getModel()).removeRow(rowSelectect);
+                    JOptionPane.showMessageDialog(null, msg);
+                }
+
+                @Override
+                public void onFailed() {
+                    JOptionPane.showMessageDialog(null, "¡Ha ocurrido un error al eliminar los datos!");
+                }
+            });
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "Selecciona un Usuario!");
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyReleased
+        // TODO add your handling code here:
+        filtro(txtFiltro.getText(),tblUsuarios);
+    }//GEN-LAST:event_txtFiltroKeyReleased
+
+    private void filtro(String consulta, JTable jtableBuscar){
+        DefaultTableModel dm = (DefaultTableModel) jtableBuscar.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(dm);
+        jtableBuscar.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(consulta));
+    }
     /**
      * @param args the command line arguments
      */
@@ -317,7 +427,7 @@ public class FrmUsuarios extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -364,6 +474,7 @@ public class FrmUsuarios extends javax.swing.JFrame {
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnViajes;
     private javax.swing.JButton jButton12;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -375,5 +486,6 @@ public class FrmUsuarios extends javax.swing.JFrame {
     private javax.swing.JLabel lblInicio;
     private javax.swing.JLabel lblUsuarios;
     private javax.swing.JTable tblUsuarios;
+    private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 }

@@ -16,12 +16,13 @@ import javax.swing.*;
  * @author 59397
  */
 public class FrmAñadirCooperativa extends javax.swing.JFrame {
-
+    // Funciona :D
     /**
      * Creates new form FrmAñadirCooperativa
      */
     public FrmAñadirCooperativa() {
         initComponents();
+        ((JSpinner.DefaultEditor)Nbuses.getEditor()).getTextField().setEditable(false);
     }
 
     /**
@@ -43,10 +44,15 @@ public class FrmAñadirCooperativa extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         Nbuses = new javax.swing.JSpinner();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Añadir Nueva Cooperativa");
 
         txtCod_Provincia.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtCod_Provincia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCod_ProvinciaKeyTyped(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel1.setText("Añadir Nueva Cooperativa");
@@ -61,6 +67,11 @@ public class FrmAñadirCooperativa extends javax.swing.JFrame {
         jLabel4.setText("Cod. \nProvincia:");
 
         txtNombreCooperativa1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtNombreCooperativa1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreCooperativa1KeyTyped(evt);
+            }
+        });
 
         btnGuardar.setBackground(java.awt.SystemColor.activeCaption);
         btnGuardar.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
@@ -83,33 +94,33 @@ public class FrmAñadirCooperativa extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(99, 99, 99)
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(105, 105, 105)
-                .addComponent(btnCancelar)
-                .addGap(62, 62, 62)
-                .addComponent(btnGuardar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(54, 54, 54)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(63, 63, 63)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombreCooperativa1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCod_Provincia, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Nbuses, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28))
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(54, 54, 54)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(63, 63, 63)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCod_Provincia, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Nbuses, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombreCooperativa1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(btnCancelar)
+                        .addGap(62, 62, 62)
+                        .addComponent(btnGuardar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(99, 99, 99)
+                        .addComponent(jLabel1)))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,11 +139,11 @@ public class FrmAñadirCooperativa extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtCod_Provincia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnGuardar))
-                .addGap(69, 69, 69))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         pack();
@@ -142,6 +153,23 @@ public class FrmAñadirCooperativa extends javax.swing.JFrame {
         // TODO add your handling code here:
         ingresarDatos();
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtNombreCooperativa1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreCooperativa1KeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(!Character.isLetter(valida)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreCooperativa1KeyTyped
+
+    private void txtCod_ProvinciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCod_ProvinciaKeyTyped
+        // TODO add your handling code here:
+        char valida = evt.getKeyChar();
+        if(Character.isLetter(valida) || Character.isDigit(valida)){
+            return;
+        }
+        evt.consume();
+    }//GEN-LAST:event_txtCod_ProvinciaKeyTyped
 
     /**
      * @param args the command line arguments
@@ -185,11 +213,11 @@ public class FrmAñadirCooperativa extends javax.swing.JFrame {
         String nombre = txtNombreCooperativa1.getText();
         String codProvincia = txtCod_Provincia.getText();
         int numBuses = Integer.parseInt(Nbuses.getValue().toString());
-        if (Validaciones.validarStrings(nombre, codProvincia) && numBuses > 30) {
+        if (Validaciones.validarStrings(nombre, codProvincia) && numBuses > 0) {
             CooperativasManager.getInstance().agregarDatos(nombre, codProvincia, numBuses, new SingleCallBack() {
                 @Override
-                public void onSucces() {
-                    JOptionPane.showMessageDialog(null, "¡Se agregó correctamente!");
+                public void onSucces(String msg) {
+                    JOptionPane.showMessageDialog(null, msg);
                 }
 
                 @Override

@@ -1,6 +1,6 @@
 package Control;
 
 public interface SingleCallBack {
-    void onSucces();
+    void onSucces(String msg);
     void onFailed();
 }
